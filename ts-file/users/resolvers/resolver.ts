@@ -77,7 +77,7 @@ export const resolvers = {
     ) => {
       console.log(password, email);
       console.log(dataSources);
-      // console.log(context);
+
       try {
         const body = await dataSources.usersAPI.loginUser(password, email);
         console.log(body.jwt);
