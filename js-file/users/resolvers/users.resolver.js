@@ -1,5 +1,5 @@
 import console from 'console';
-export const resolvers = {
+export const resolverUsers = {
     Query: {
         jwt: async (_source, { password, email }, { dataSources }, context) => {
             console.log(password, email);

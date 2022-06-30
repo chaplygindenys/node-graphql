@@ -50,6 +50,14 @@ export interface Track {
   released: number;
   genresIds: string[];
 }
+export interface updateTrack {
+  title: string;
+  albumId: string;
+  bandsIds: string[];
+  duration: number;
+  released: number;
+  genresIds: string[];
+}
 export interface Album {
   _id: string;
   name: string;
