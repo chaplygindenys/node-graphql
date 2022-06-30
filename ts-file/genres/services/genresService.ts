@@ -17,24 +17,25 @@ export class GenresAPI extends RESTDataSource {
     request.headers.set('Authorization', `Bearer ${this.context.token}`);
   }
 
-  getAllGenre() {
-    const body = this.get('');
-    console.log(body);
+  getAllGenre(opt: {}) {
+    const body = this.get('', opt);
+    console.log('services: ', body);
     return body;
   }
   getGenre(id: string) {
     const body = this.get(`/${encodeURIComponent(id)}`);
-    console.log(body);
+    console.log('services: ', body);
     return body;
   }
-  postGenre({ name, description, country, year }: Genre) {
+  async postGenre({ name, description, country, year }: Genre) {
+    console.log('ttttttttttttttttt', { name, description, country, year });
     const body = this.post('', {
       name,
       description,
       country,
       year,
     });
-    console.log(body);
+    console.log('services: ', body);
     return body;
   }
   putGenre(id: string, { name, description, country, year }: Genre) {
@@ -44,12 +45,12 @@ export class GenresAPI extends RESTDataSource {
       country,
       year,
     });
-    console.log(body);
+    console.log('services: ', body);
     return body;
   }
   remoweGenre(id: string) {
     const body = this.delete(`/${encodeURIComponent(id)}`);
-    console.log(body);
+    console.log('services: ', body);
     return body;
   }
 }

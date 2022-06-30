@@ -6,6 +6,14 @@ type User {
   password: String!
   email: String!
 }
+type Delete {
+  acknowledged: Boolean
+  deletedCount: Int!
+}
+type Type {
+  type: 'band' | 'genre' | 'artist' | 'track'
+}
+
 type IncrementUserViewsResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!

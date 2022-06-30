@@ -6,3 +6,18 @@ type Favourites {
   artists: [ID]
   tracks: [ID]
 }
+
+input addFavouriteInput {
+  type: Type!
+  id: ID!
+}
+
+type Query {
+  favourites(limit: Int, offset: Int): [Favourite]
+  favourite(id: ID!): Favourite
+}
+
+type Mutation {
+  createFavourites(createFavouritesInput: CreateFavouritesInput): Favourites!
+  deleteFavourites(type: Type!, id: ID!): Delete
+}

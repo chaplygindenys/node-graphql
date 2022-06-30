@@ -5,30 +5,41 @@
 // import { BandsService } from '../../bands/services/bands.service.js';
 // import {} from 'module';
 
-import { Genre } from '../../interface';
+import { optionsGenre } from '../../config.js';
+import { Genre } from '../../interface.js';
 
-// export class TracksResolver extends RESTDataSource {
-//   constructor() // private readonly tracksService: TracksService,
-//   // private readonly genresService: GenresService,
-//   // private readonly artistsService: ArtistsService,
-//   // private readonly bandsService: BandsService
-//   { super();
-//     this.baseURL =}
-// }
-export const resolverGanres = {
+export const resolverGenres = {
   Query: {
     genres: async (
       _source: any,
-      __: any,
+      { offset, limit }: any,
       { dataSources }: any,
       context: any
     ) => {
       console.log(dataSources);
-      // console.log(context);
+      console.log(offset, limit);
       try {
-        const body = await dataSources.genresAPI.getAllGenre();
+        const body = await dataSources.genresAPI.getAllGenre({
+          offset: offset || optionsGenre.defaultOffset,
+          limit: limit || optionsGenre.defaultOffset,
+        });
         console.log(`resolver`, body);
-        return body.items;
+        const trueIdforBodyItems = (arr: Genre[]) => {
+          let goodArr = [];
+          for (let index = 0; index < arr.length; index++) {
+            const body = arr[index];
+            goodArr.push({
+              id: body._id,
+              name: body.name,
+              description: body.description,
+              country: body.country,
+              year: body.year,
+            });
+          }
+          console.log(goodArr);
+          return goodArr;
+        };
+        return trueIdforBodyItems(body.items);
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);
@@ -40,43 +51,37 @@ export const resolverGanres = {
         }
       }
     },
-  },
-  genre: async (
-    _source: any,
-    { id }: any,
-    { dataSources }: any,
-    context: any
-  ) => {
-    console.log(id);
-    console.log(dataSources);
+    genre: async (
+      _source: any,
+      { id }: any,
+      { dataSources }: any,
+      context: any
+    ) => {
+      console.log(id);
+      console.log(dataSources);
 
-    try {
-      const body: Genre = await dataSources.genresAPI.getGenre(id);
-      console.log(body);
-      return {
-        code: 200,
-        success: true,
-        message: ' get Ganre  !',
-        genre: {
+      try {
+        const body: Genre = await dataSources.genresAPI.getGenre(id);
+        console.log('resolver: ', body);
+        return {
           id: body._id,
           name: body.name,
           description: body.description,
           country: body.country,
           year: body.year,
-        },
-      };
-    } catch (err: Error | undefined | any) {
-      if (err) {
-        console.error(err);
-        return {
-          code: 400,
-          success: false,
-          message: err.message,
         };
+      } catch (err: Error | undefined | any) {
+        if (err) {
+          console.error(err);
+          return {
+            code: 400,
+            success: false,
+            message: err.message,
+          };
+        }
       }
-    }
+    },
   },
-
   Mutation: {
     createGenre: async (
       _source: any,
@@ -85,19 +90,25 @@ export const resolverGanres = {
       context: any
     ) => {
       console.log(name, description, country, year);
-      console.log(dataSources);
+      console.log(dataSources.genresAPI.context.token);
       // console.log(context);
       try {
-        if (dataSources.context.token) {
-          console.log(dataSources.context.token);
-          const body = await dataSources.genresAPI.postGenre(
+        if (dataSources.genresAPI.context.token) {
+          console.log(dataSources.genresAPI.context.token);
+          const body = await dataSources.genresAPI.postGenre({
             name,
             description,
             country,
-            year
-          );
+            year,
+          });
           console.log(`resolver`, body.items);
-          return body.items;
+          return {
+            id: body._id,
+            name: body.name,
+            description: body.description,
+            country: body.country,
+            year: body.year,
+          };
         } else {
           throw new Error('AutorithationError');
         }
@@ -113,16 +124,16 @@ export const resolverGanres = {
     },
     updateGenre: async (
       _source: any,
-      { id, Genre: { name, description, country, year } }: any,
+      { id, name, description, country, year }: any,
       { dataSources }: any,
       context: any
     ) => {
       console.log(id, { name, description, country, year });
-      console.log(dataSources);
+      console.log(dataSources.genresAPI);
       // console.log(context);
       try {
-        if (dataSources.context.token) {
-          console.log(dataSources.context.token);
+        if (dataSources.genresAPI.context.token) {
+          console.log(dataSources.genresAPI.context.token);
           const body = await dataSources.genresAPI.putGenre(id, {
             name,
             description,
@@ -130,7 +141,13 @@ export const resolverGanres = {
             year,
           });
           console.log(`resolver`, body.items);
-          return body.items;
+          return {
+            id: body._id,
+            name: body.name,
+            description: body.description,
+            country: body.country,
+            year: body.year,
+          };
         } else {
           throw new Error('AutorithationError');
         }
@@ -156,8 +173,11 @@ export const resolverGanres = {
       try {
         if (dataSources.genresAPI.context.token) {
           const body = await dataSources.genresAPI.remoweGenre(id);
-          console.log(body);
-          return body.items;
+          console.log('resolver: ', body);
+          return {
+            acknowledged: body.acknowledged,
+            deletedCount: body.deletedCount,
+          };
         } else {
           throw new Error('AutorithationError');
         }

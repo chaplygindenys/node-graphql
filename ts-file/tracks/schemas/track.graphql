@@ -7,47 +7,34 @@ type Track {
   released: Int!
   genres: [Genre!]!
 }
-type Code {
-  Code: Int!
+input CreateTrackInput {
+  title: String!
+  albumsId: String!
+  bandsIds: [ID]
+  artistsIds: [ID]
+  duration: Int!
+  released: Int!
+  genresIds: [ID!]!
 }
-type IncrementTrackViewsResponse {
-  "Similar to HTTP status code, represents the status of the mutation"
-  code: Int!
-  "Indicates whether the mutation was successful"
-  success: Boolean!
-  "Human-readable message for the UI"
-  message: String!
-  "Newly updated track after a successful mutation"
-  track: Track
+
+input UpdateTrackInput {
+  id: ID!
+  title: String
+  albumsId: String
+  bandsId: [ID]
+  artistsIds: [ID]
+  duration: Int
+  released: Int
+  genresIds: [ID]
 }
 
 type Query {
-  "Fetch a specific track, provided a tracks's ID"
-  track(id: ID!): Track
-  "get all tracks"
-  tracks: [Track]
+  Tracks(limit: Int, offset: Int): [Track]
+  Track(id: ID!): Track
 }
 
 type Mutation {
-  "post tracks"
-  createTrack(
-    title: String!
-    albumId: String!
-    bandsIds: [ID]
-    duration: Int!
-    released: Int!
-    genresIds: [ID!]!
-  ): IncrementTrackViewsResponse!
-  "delate tracks"
-  deleteTrack(id: ID!): IncrementTrackViewsResponse!
-  "update tracks"
-  updateTrack(
-    id: ID!
-    title: String!
-    albumId: String!
-    bandsIds: [ID]
-    duration: Int!
-    released: Int!
-    genresIds: [ID!]!
-  ): IncrementTrackViewsResponse!
+  createTrack(createTrackInput: CreateTrackInput): Track!
+  updateTrack(updateTrackInput: UpdateTrackInput): Track!
+  deleteTrack(id: ID!): Delete
 }
