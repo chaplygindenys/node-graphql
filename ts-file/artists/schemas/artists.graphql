@@ -7,7 +7,7 @@ type Artist {
   birthPlace: String
   country: String
   bands: [ID]
-  instruments: String
+  instrument: String
 }
 input CreateArtistInput {
   firstName: String!

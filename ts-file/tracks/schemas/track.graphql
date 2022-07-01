@@ -1,31 +1,12 @@
 type Track {
   id: ID!
   title: String!
-  albums: String!
-  bands: [Band]
+  albums: [String]
+  bands: [String]
+  artists: [String]
   duration: Int!
   released: Int!
-  genres: [Genre!]!
-}
-input CreateTrackInput {
-  title: String!
-  albumsId: String!
-  bandsIds: [ID]
-  artistsIds: [ID]
-  duration: Int!
-  released: Int!
-  genresIds: [ID!]!
-}
-
-input UpdateTrackInput {
-  id: ID!
-  title: String
-  albumsId: String
-  bandsId: [ID]
-  artistsIds: [ID]
-  duration: Int
-  released: Int
-  genresIds: [ID]
+  genres: [String]
 }
 
 type Query {
@@ -34,7 +15,26 @@ type Query {
 }
 
 type Mutation {
-  createTrack(createTrackInput: CreateTrackInput): Track!
-  updateTrack(updateTrackInput: UpdateTrackInput): Track!
+  createTrack(
+    title: String!
+    albumId: String!
+    bandsIds: [ID]
+    artistsIds: [ID]
+    duration: Int!
+    released: Int!
+    genresIds: [ID!]!
+  ): Track!
+  "--------------------"
+  updateTrack(
+    id: ID!
+    title: String
+    albumId: String
+    bandsIds: [ID]
+    artistsIds: [ID]
+    duration: Int
+    released: Int
+    genresIds: [ID]
+  ): Track!
+  "---------------------"
   deleteTrack(id: ID!): Delete
 }

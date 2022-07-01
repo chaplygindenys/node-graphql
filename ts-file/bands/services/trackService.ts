@@ -2,72 +2,50 @@ import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
 import { Track } from '../../interface';
 
-export class TracksAPI extends RESTDataSource {
+export class BandsAPI extends RESTDataSource {
   constructor() {
     // private readonly bandsService: BandsService // private readonly artistsService: ArtistsService, // private readonly genresService: GenresService, // private readonly tracksService: TracksService,
     super();
-    this.baseURL = `http://localhost:3006/v1/tracks`;
+    this.baseURL = `http://localhost:3003/v1/bands`;
   }
   willSendRequest(request: RequestOptions) {
     console.log(this.context.token);
     request.headers.set('Authorization', `Bearer ${this.context.token}`);
   }
 
-  getAllTrack() {
+  getAllBand() {
     const tracks = this.get('');
     console.log(tracks);
     return tracks;
   }
-  async getTrack(id: string) {
+  async getBand(id: string) {
     const track = this.get(`/${encodeURIComponent(id)}`);
     console.log(track);
     return track;
   }
-  postTrack({
-    title,
-    albumId,
-    bandsIds,
-    artistsIds,
-    duration,
-    released,
-    genresIds,
-  }: any) {
+  postBand({ name, origin, members, website, genresIds }: any) {
     const newTrack = this.post('', {
-      title,
-      albumId,
-      bandsIds,
-      artistsIds,
-      duration,
-      released,
+      name,
+      origin,
+      members,
+      website,
       genresIds,
     });
     console.log(newTrack);
     return newTrack;
   }
-  putTrack({
-    id,
-    title,
-    albumId,
-    bandsIds,
-    artistsIds,
-    duration,
-    released,
-    genresIds,
-  }: any) {
+  putBand({ id, name, origin, members, website, genresIds }: any) {
     const updateTrack = this.put(`/${id}`, {
-      id,
-      title,
-      albumId,
-      bandsIds,
-      artistsIds,
-      duration,
-      released,
+      name,
+      origin,
+      members,
+      website,
       genresIds,
     });
     console.log(updateTrack);
     return updateTrack;
   }
-  async remoweTrack(id: string) {
+  async remoweBand(id: string) {
     const body = this.delete(`/${encodeURIComponent(id)}`);
     console.log(body);
     return body;

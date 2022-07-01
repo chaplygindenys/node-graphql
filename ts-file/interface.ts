@@ -26,14 +26,17 @@ export interface Band {
   _id: string;
   name: string;
   origin: string;
-  membersId: Member[];
+  members: Member[];
   website: string;
   genresIds: string[];
 }
 export interface Member {
-  _id: string;
-  name: string;
+  id: string;
+  artist: string;
+  instrument: string;
+  year: String;
 }
+
 export interface Genre {
   _id: string;
   name: string;
@@ -46,6 +49,7 @@ export interface Track {
   title: string;
   albumId: string;
   bandsIds: string[];
+  artistsIds: string[];
   duration: number;
   released: number;
   genresIds: string[];

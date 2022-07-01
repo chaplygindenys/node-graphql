@@ -1,91 +1,40 @@
 export const resolverTracks = {
     Query: {
-        track: async (_source, { id }, { dataSources }, context) => {
+        Track: async (_source, { id }, { dataSources }) => {
             console.log(id);
             console.log(dataSources);
             try {
                 const body = await dataSources.tracksAPI.getTrack(id);
                 console.log(body);
                 return {
-                    code: 200,
-                    success: true,
-                    message: ' get Track!',
-                    track: {
-                        id: body._id,
-                        title: body.title,
-                        albums: body.albumId,
-                        bands: body.bandsIds,
-                        duration: body.duration,
-                        released: body.released,
-                        genres: body.genresIds,
-                    },
+                    id: body._id,
+                    title: body.title,
+                    albums: body.albumId,
+                    bands: body.bandsIds,
+                    duration: body.duration,
+                    released: body.released,
+                    genres: body.genresIds,
                 };
             }
             catch (err) {
                 if (err) {
                     console.error(err);
                     return {
-                        code: 400,
-                        success: false,
                         message: err.message,
                     };
                 }
             }
         },
-        tracks: async (_source, __, { dataSources }, context) => {
+        Tracks: async (_source, __, { dataSources }, context) => {
             console.log(dataSources);
             try {
                 const body = await dataSources.tracksAPI.getAllTrack();
                 console.log(`resolver`, body);
-                return {
-                    code: 200,
-                    success: true,
-                    message: 'get allTracks!',
-                    user: {
-                        tracks: body.tracks,
-                    },
-                };
-            }
-            catch (err) {
-                if (err) {
-                    console.log(err);
-                    return {
-                        code: 400,
-                        success: false,
-                        message: err.message,
-                    };
-                }
-            }
-        },
-    },
-    Mutation: {
-        updateTrack: async (_source, { id, Track: { title, albums, bands, duration, released, genres } }, { dataSources }, context) => {
-            console.log(id, {
-                title,
-                albums,
-                bands,
-                duration,
-                released,
-                genres,
-            });
-            console.log(dataSources);
-            try {
-                if (dataSources.context.token) {
-                    console.log(dataSources.context.token);
-                    const body = await dataSources.tracksAPI.putTrack(id, {
-                        title,
-                        albums,
-                        bands,
-                        duration,
-                        released,
-                        genres,
-                    });
-                    console.log(`resolver`, body);
-                    return {
-                        code: 200,
-                        success: true,
-                        message: 'User successfully updated!',
-                        track: {
+                const trueIdforBodyItems = (arr) => {
+                    let goodArr = [];
+                    for (let index = 0; index < arr.length; index++) {
+                        const body = arr[index];
+                        goodArr.push({
                             id: body._id,
                             title: body.title,
                             albums: body.albumId,
@@ -93,7 +42,88 @@ export const resolverTracks = {
                             duration: body.duration,
                             released: body.released,
                             genres: body.genresIds,
-                        },
+                        });
+                    }
+                    console.log(goodArr);
+                    return goodArr;
+                };
+                return trueIdforBodyItems(body.items);
+            }
+            catch (err) {
+                if (err) {
+                    console.log(err);
+                    return {
+                        message: err.message,
+                    };
+                }
+            }
+        },
+    },
+    Mutation: {
+        createTrack: async (_source, { title, albumId, bandsIds, artistsIds, duration, released, genresIds, }, { dataSources }, context) => {
+            console.log(title, albumId, bandsIds, artistsIds, duration, released, genresIds);
+            console.log(dataSources.tracksAPI.context.token);
+            try {
+                if (dataSources.tracksAPI.context.token) {
+                    const body = await dataSources.tracksAPI.postTrack({
+                        title,
+                        albumId,
+                        bandsIds,
+                        artistsIds,
+                        duration,
+                        released,
+                        genresIds,
+                    });
+                    console.log(`resolver`, body);
+                    return {
+                        id: body._id,
+                        title: body.title,
+                        albums: [body.albumId],
+                        bands: body.bandsIds,
+                        artists: body.artistsIds,
+                        duration: body.duration,
+                        released: body.released,
+                        genres: body.genresIds,
+                    };
+                }
+                else {
+                    throw new Error('AutorithationError');
+                }
+            }
+            catch (err) {
+                if (err) {
+                    console.log('resolver', err);
+                    return {
+                        message: err.message,
+                    };
+                }
+            }
+        },
+        updateTrack: async (_source, { id, title, albumId, bandsIds, artistsIds, duration, released, genresIds, }, { dataSources }, context) => {
+            console.log(id, title, albumId, bandsIds, artistsIds, duration, released, genresIds);
+            try {
+                if (dataSources.tracksAPI.context.token) {
+                    console.log(dataSources.tracksAPI.context.token);
+                    const body = await dataSources.tracksAPI.putTrack({
+                        id: id,
+                        title: title,
+                        albumId: albumId,
+                        bandsIds: bandsIds,
+                        artistsIds: artistsIds,
+                        duration: duration,
+                        released: released,
+                        genresIds: genresIds,
+                    });
+                    console.log(`resolver`, body);
+                    return {
+                        id: body._id,
+                        title: body.title,
+                        albums: [body.albumId],
+                        bands: body.bandsIds,
+                        artists: body.artistsIds,
+                        duration: body.duration,
+                        released: body.released,
+                        genres: body.genresIds,
                     };
                 }
                 else {
@@ -115,10 +145,11 @@ export const resolverTracks = {
             console.log(dataSources.tracksAPI.context.token);
             try {
                 if (dataSources.tracksAPI.context.token) {
-                    const code = await dataSources.tracksAPI.remoweTrack(id);
-                    console.log(code);
+                    const body = await dataSources.tracksAPI.remoweTrack(id);
+                    console.log(body);
                     return {
-                        code: 204,
+                        acknowledged: body.acknowledged,
+                        deletedCount: body.deletedCount,
                     };
                 }
                 else {
@@ -128,46 +159,8 @@ export const resolverTracks = {
             catch (err) {
                 if (err) {
                     return {
-                        code: 400,
-                        success: false,
-                        message: err.message,
-                    };
-                }
-            }
-        },
-        createTrack: async (_source, track, { dataSources }, context) => {
-            console.log(track);
-            console.log(dataSources.tracksAPI.context.token);
-            try {
-                if (dataSources.tracksAPI.context.token) {
-                    const body = await dataSources.tracksAPI.postTrack(track);
-                    console.log(`resolver`, body);
-                    return {
-                        code: 201,
-                        success: true,
-                        message: 'User successfully created!',
-                        track: {
-                            id: body._id,
-                            title: body.title,
-                            albums: body.albumId,
-                            bands: body.bandsIds,
-                            duration: body.duration,
-                            released: body.released,
-                            genres: body.genresIds,
-                        },
-                    };
-                }
-                else {
-                    throw new Error('AutorithationError');
-                }
-            }
-            catch (err) {
-                if (err) {
-                    console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEE', err);
-                    return {
-                        code: 400,
-                        success: false,
-                        message: err.message,
+                        acknowledged: false,
+                        deletedCount: 0,
                     };
                 }
             }

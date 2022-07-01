@@ -3,6 +3,7 @@ import { readFile } from 'fs/promises';
 import { resolverUsers } from './users/resolvers/users.resolver.js';
 import { resolverTracks } from './tracks/resolvers/tracks.resolver.js';
 import { resolverGenres } from './genres/resolvers/ganres.resolver.js';
+import { resolverBands } from './bands/resolvers/bands.resolver.js';
 
 import { gql } from 'apollo-server-core';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
@@ -13,6 +14,12 @@ export const typeDefs = await loadSchema('./ts-file/**/*.graphql', {
   loaders: [new GraphQLFileLoader()],
 });
 
+export const addTrueId = (obj: {}) => {
+  const { _id }: any = obj;
+  const newObj = { id: _id, ...obj };
+  console.log(newObj);
+  return newObj;
+};
 // export const read = async (path: string) => {
 //   try {
 //     const controller = new AbortController();
@@ -60,13 +67,15 @@ export const typeDefs = await loadSchema('./ts-file/**/*.graphql', {
 // );
 
 let Q = {
+  ...resolverBands.Query,
+  ...resolverGenres.Query,
   ...resolverTracks.Query,
   ...resolverUsers.Query,
-  ...resolverGenres.Query,
 };
 let M = {
+  ...resolverBands.Mutation,
+  ...resolverGenres.Mutation,
   ...resolverTracks.Mutation,
   ...resolverUsers.Mutation,
-  ...resolverGenres.Mutation,
 };
 export const resolvers = { Query: Q, Mutation: M };
