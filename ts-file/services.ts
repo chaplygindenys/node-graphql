@@ -1,13 +1,13 @@
 import { readFile } from 'fs/promises';
+import { gql } from 'apollo-server-core';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchema } from '@graphql-tools/load';
 
 import { resolverUsers } from './users/resolvers/users.resolver.js';
 import { resolverTracks } from './tracks/resolvers/tracks.resolver.js';
 import { resolverGenres } from './genres/resolvers/ganres.resolver.js';
 import { resolverBands } from './bands/resolvers/bands.resolver.js';
-
-import { gql } from 'apollo-server-core';
-import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { loadSchema } from '@graphql-tools/load';
+import { resolverArtist } from './artists/resolvers/artists.resolver.js';
 
 export const typeDefs = await loadSchema('./ts-file/**/*.graphql', {
   // load files and merge them into a single schema object
@@ -67,12 +67,14 @@ export const addTrueId = (obj: {}) => {
 // );
 
 let Q = {
+  ...resolverArtist.Query,
   ...resolverBands.Query,
   ...resolverGenres.Query,
   ...resolverTracks.Query,
   ...resolverUsers.Query,
 };
 let M = {
+  ...resolverArtist.Mutation,
   ...resolverBands.Mutation,
   ...resolverGenres.Mutation,
   ...resolverTracks.Mutation,

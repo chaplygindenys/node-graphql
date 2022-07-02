@@ -1,6 +1,6 @@
 // import { RESTDataSource } from 'apollo-datasource-rest';
 // import { TracksService } from '../services/track.service.js';
-import { GenresAPI } from '../../genres/services/genresService.js';
+import { GenresAPI } from '../../genres/services/genres.service.js';
 // import { ArtistsService } from '../../artists/services/artists.service.js';
 // import { BandsService } from '../../bands/services/bands.service.js';
 // import {} from 'module';
