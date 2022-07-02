@@ -11,24 +11,12 @@ type Delete {
   deletedCount: Int!
 }
 
-type IncrementUserViewsResponse {
-  "Similar to HTTP status code, represents the status of the mutation"
-  code: Int!
-  "Indicates whether the mutation was successful"
-  success: Boolean!
-  "Human-readable message for the UI"
-  message: String!
-  "Newly updated track after a successful mutation"
-  user: User
-}
 type JWT {
   JWT: String!
 }
 
 type Query {
-  "Fetch a specific user, provided a user's ID"
-  user(id: ID!): IncrementUserViewsResponse!
-  "Fetch a specific Jwt, provided a user's password and email"
+  user(id: ID!): User!
   jwt(password: String!, email: String!): JWT
 }
 
@@ -38,5 +26,5 @@ type Mutation {
     lastName: String
     password: String!
     email: String!
-  ): IncrementUserViewsResponse!
+  ): User!
 }
