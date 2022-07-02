@@ -1,6 +1,7 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
 import { Track } from '../../interface';
+import { addTrueId } from '../../services';
 
 export class TracksAPI extends RESTDataSource {
   constructor() {
@@ -22,6 +23,24 @@ export class TracksAPI extends RESTDataSource {
     const track = this.get(`/${encodeURIComponent(id)}`);
     console.log(track);
     return track;
+  }
+  async getAllTracksbyIds(ids: string[]) {
+    try {
+      let tracks = [];
+      for (let index = 0; index < ids.length; index++) {
+        const id = ids[index];
+        const track = await this.getTrack(id);
+        console.log('track: ---->', track);
+        tracks.push(addTrueId(track));
+      }
+      console.log('A', tracks);
+      return tracks;
+    } catch (error) {
+      if (error) {
+        console.log('EEEartist', error);
+        return null;
+      }
+    }
   }
   postTrack({
     title,

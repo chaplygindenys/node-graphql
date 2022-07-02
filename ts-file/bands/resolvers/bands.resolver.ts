@@ -31,7 +31,7 @@ export const resolverBands = {
           origin: body.origin,
           members: trueArrMembersFromBandRes(body),
           website: body.website,
-          genres: await dataSources.genresAPI.getAllgenresbyIds(body.genresIds),
+          genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
         };
       } catch (err: Error | undefined | any) {
         if (err) {
@@ -62,7 +62,7 @@ export const resolverBands = {
               origin: body.origin,
               members: trueArrMembersFromBandRes(body),
               website: body.website,
-              genres: dataSources.genresAPI.getAllgenresbyIds(body.genresIds),
+              genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
             });
           }
           console.log(goodArr);
@@ -105,7 +105,7 @@ export const resolverBands = {
             origin: body.origin,
             members: trueArrMembersFromBandRes(body),
             website: body.website,
-            genres: await dataSources.genresAPI.getAllgenresbyIds(
+            genres: await dataSources.genresAPI.getAllGenresbyIds(
               body.genresIds
             ),
           };
@@ -147,7 +147,7 @@ export const resolverBands = {
             origin: body.origin,
             members: trueArrMembersFromBandRes(body),
             website: body.website,
-            genres: await dataSources.genresAPI.getAllgenresbyIds(
+            genres: await dataSources.genresAPI.getAllGenresbyIds(
               body.genresIds
             ),
           };

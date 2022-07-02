@@ -24,7 +24,7 @@ export class GenresAPI extends RESTDataSource {
     return body;
   }
 
-  async getAllgenresbyIds(ids: string[]) {
+  async getAllGenresbyIds(ids: string[]) {
     try {
       let genres = [];
       for (let index = 0; index < ids.length; index++) {

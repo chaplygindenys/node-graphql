@@ -24,7 +24,7 @@ export class BandsAPI extends RESTDataSource {
     console.log(track);
     return track;
   }
-  async getAllbandsbyIds(ids: string[]) {
+  async getAllBandsbyIds(ids: string[]) {
     try {
       let bands = [];
       for (let index = 0; index < ids.length; index++) {

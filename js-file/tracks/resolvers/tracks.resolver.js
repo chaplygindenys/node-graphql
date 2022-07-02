@@ -1,3 +1,4 @@
+import { addTrueId } from '../../services';
 export const resolverTracks = {
     Query: {
         Track: async (_source, { id }, { dataSources }) => {
@@ -9,11 +10,11 @@ export const resolverTracks = {
                 return {
                     id: body._id,
                     title: body.title,
-                    albums: body.albumId,
-                    bands: body.bandsIds,
+                    albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+                    bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
                     duration: body.duration,
                     released: body.released,
-                    genres: body.genresIds,
+                    genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
                 };
             }
             catch (err) {
@@ -37,11 +38,11 @@ export const resolverTracks = {
                         goodArr.push({
                             id: body._id,
                             title: body.title,
-                            albums: body.albumId,
-                            bands: body.bandsIds,
+                            albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
                             duration: body.duration,
                             released: body.released,
-                            genres: body.genresIds,
+                            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
                         });
                     }
                     console.log(goodArr);
@@ -78,12 +79,11 @@ export const resolverTracks = {
                     return {
                         id: body._id,
                         title: body.title,
-                        albums: [body.albumId],
-                        bands: body.bandsIds,
-                        artists: body.artistsIds,
+                        albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
                         duration: body.duration,
                         released: body.released,
-                        genres: body.genresIds,
+                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
                     };
                 }
                 else {
@@ -118,12 +118,11 @@ export const resolverTracks = {
                     return {
                         id: body._id,
                         title: body.title,
-                        albums: [body.albumId],
-                        bands: body.bandsIds,
-                        artists: body.artistsIds,
+                        albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
                         duration: body.duration,
                         released: body.released,
-                        genres: body.genresIds,
+                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
                     };
                 }
                 else {

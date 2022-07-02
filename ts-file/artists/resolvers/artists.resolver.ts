@@ -29,7 +29,7 @@ export const resolverArtist = {
               birthDate: body.birthDate,
               birthPlace: body.birthPlace,
               country: body.country,
-              bands: dataSources.bandsAPI.getAllbandsbyIds(body.bandsIds),
+              bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
               instrument: body.instruments,
             });
           }
@@ -63,7 +63,7 @@ export const resolverArtist = {
           birthDate: body.birthDate,
           birthPlace: body.birthPlace,
           country: body.country,
-          bands: dataSources.bandsAPI.getAllbandsbyIds(body.bandsIds),
+          bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
           instrument: body.instruments,
         };
       } catch (err: Error | undefined | any) {
@@ -123,7 +123,7 @@ export const resolverArtist = {
             birthDate: body.birthDate,
             birthPlace: body.birthPlace,
             country: body.country,
-            bands: dataSources.bandsAPI.getAllbandsbyIds(body.bandsIds),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             instrument: body.instruments,
           };
         } else {
@@ -185,7 +185,7 @@ export const resolverArtist = {
             birthDate: body.birthDate,
             birthPlace: body.birthPlace,
             country: body.country,
-            bands: dataSources.bandsAPI.getAllbandsbyIds(body.bandsIds),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             instrument: body.instruments,
           };
         } else {

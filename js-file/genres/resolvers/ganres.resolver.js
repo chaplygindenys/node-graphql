@@ -1,4 +1,4 @@
-import { optionsGenre } from '../../config.js';
+import { options } from '../../config.js';
 export const resolverGenres = {
     Query: {
         genres: async (_source, { offset, limit }, { dataSources }, context) => {
@@ -6,8 +6,8 @@ export const resolverGenres = {
             console.log(offset, limit);
             try {
                 const body = await dataSources.genresAPI.getAllGenre({
-                    offset: offset || optionsGenre.defaultOffset,
-                    limit: limit || optionsGenre.defaultOffset,
+                    offset: offset || options.defaultOffset,
+                    limit: limit || options.defaultOffset,
                 });
                 console.log(`resolver`, body);
                 const trueIdforBodyItems = (arr) => {

@@ -6,6 +6,7 @@
 // import {} from 'module';
 
 import { Track } from '../../interface';
+import { addTrueId } from '../../services';
 
 // export class TracksResolver extends RESTDataSource {
 //   constructor() // private readonly tracksService: TracksService,
@@ -27,11 +28,11 @@ export const resolverTracks = {
         return {
           id: body._id,
           title: body.title,
-          albums: body.albumId,
-          bands: body.bandsIds,
+          albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+          bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
           duration: body.duration,
           released: body.released,
-          genres: body.genresIds,
+          genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
         };
       } catch (err: Error | undefined | any) {
         if (err) {
@@ -59,11 +60,11 @@ export const resolverTracks = {
             goodArr.push({
               id: body._id,
               title: body.title,
-              albums: body.albumId,
-              bands: body.bandsIds,
+              albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+              bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
               duration: body.duration,
               released: body.released,
-              genres: body.genresIds,
+              genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
             });
           }
           console.log(goodArr);
@@ -121,12 +122,11 @@ export const resolverTracks = {
           return {
             id: body._id,
             title: body.title,
-            albums: [body.albumId],
-            bands: body.bandsIds,
-            artists: body.artistsIds,
+            albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             duration: body.duration,
             released: body.released,
-            genres: body.genresIds,
+            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
           };
         } else {
           throw new Error('AutorithationError');
@@ -182,12 +182,11 @@ export const resolverTracks = {
           return {
             id: body._id,
             title: body.title,
-            albums: [body.albumId],
-            bands: body.bandsIds,
-            artists: body.artistsIds,
+            albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             duration: body.duration,
             released: body.released,
-            genres: body.genresIds,
+            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
           };
         } else {
           throw new Error('AutorithationError');

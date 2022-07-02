@@ -8,6 +8,7 @@ import { resolverTracks } from './tracks/resolvers/tracks.resolver.js';
 import { resolverGenres } from './genres/resolvers/ganres.resolver.js';
 import { resolverBands } from './bands/resolvers/bands.resolver.js';
 import { resolverArtist } from './artists/resolvers/artists.resolver.js';
+import { resolverAlbum } from './albums/resolvers/albums.resolver.js';
 
 export const typeDefs = await loadSchema('./ts-file/**/*.graphql', {
   // load files and merge them into a single schema object
@@ -67,6 +68,7 @@ export const addTrueId = (obj: {}) => {
 // );
 
 let Q = {
+  ...resolverAlbum.Query,
   ...resolverArtist.Query,
   ...resolverBands.Query,
   ...resolverGenres.Query,
@@ -74,6 +76,7 @@ let Q = {
   ...resolverUsers.Query,
 };
 let M = {
+  ...resolverAlbum.Mutation,
   ...resolverArtist.Mutation,
   ...resolverBands.Mutation,
   ...resolverGenres.Mutation,
