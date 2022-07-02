@@ -80,3 +80,7 @@ export interface Favorite {
   artistsIds: string[];
   tracksIds: string[];
 }
+export interface FavoriteItem {
+  id: string;
+  type: string;
+}

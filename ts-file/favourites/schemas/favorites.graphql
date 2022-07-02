@@ -1,15 +1,10 @@
 type Favourite {
   id: ID!
   userId: ID!
-  bands: [ID]
-  genres: [ID]
-  artists: [ID]
-  tracks: [ID]
-}
-
-input addFavouriteInput {
-  type: Type!
-  id: ID!
+  bands: [Band]
+  genres: [Genre]
+  artists: [Artist]
+  tracks: [Track]
 }
 
 type Query {
@@ -24,6 +19,6 @@ enum Type {
 }
 
 type Mutation {
-  createFavourite(addFavouriteInput: addFavouriteInput): Favourite!
+  createFavourite(type: Type!, id: ID!): Favourite!
   deleteFavourite(type: Type!, id: ID!): Delete
 }
