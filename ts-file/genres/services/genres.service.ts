@@ -1,8 +1,6 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import { Context } from 'apollo-server-core';
 import console from 'console';
-import { ArgumentNode } from 'graphql';
-import { request } from 'http';
 
 import { Genre } from '../../interface';
 import { addTrueId } from '../../services.js';

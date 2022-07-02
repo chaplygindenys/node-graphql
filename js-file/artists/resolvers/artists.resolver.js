@@ -64,7 +64,7 @@ export const resolverArtist = {
     },
     Mutation: {
         createArtist: async (_source, { firstName, secondName, middleName, birthDate, birthPlace, country, bandsIds, instruments, }, { dataSources }, context) => {
-            console.log(firstName, secondName, middleName, birthDate, birthPlace, country, bandsIds, instruments);
+            console.log(firstName, secondName, middleName, new Date(Date.parse(birthDate)), birthPlace, country, bandsIds, instruments);
             console.log(dataSources.artistsAPI.context.token);
             try {
                 if (dataSources.artistsAPI.context.token) {
@@ -73,7 +73,7 @@ export const resolverArtist = {
                         firstName,
                         secondName,
                         middleName,
-                        birthDate,
+                        birthDate: new Date(Date.parse(birthDate)),
                         birthPlace,
                         country,
                         bandsIds,

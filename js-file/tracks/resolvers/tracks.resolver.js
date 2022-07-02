@@ -1,4 +1,4 @@
-import { addTrueId } from '../../services';
+import { addTrueId } from '../../services.js';
 export const resolverTracks = {
     Query: {
         Track: async (_source, { id }, { dataSources }) => {

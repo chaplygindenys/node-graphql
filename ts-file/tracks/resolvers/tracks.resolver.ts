@@ -1,21 +1,6 @@
-// import { RESTDataSource } from 'apollo-datasource-rest';
-// import { TracksService } from '../services/track.service.js';
-// import { GenresService } from '../../genres/services/genres.services.js';
-// import { ArtistsService } from '../../artists/services/artists.service.js';
-// import { BandsService } from '../../bands/services/bands.service.js';
-// import {} from 'module';
-
 import { Track } from '../../interface';
-import { addTrueId } from '../../services';
+import { addTrueId } from '../../services.js';
 
-// export class TracksResolver extends RESTDataSource {
-//   constructor() // private readonly tracksService: TracksService,
-//   // private readonly genresService: GenresService,
-//   // private readonly artistsService: ArtistsService,
-//   // private readonly bandsService: BandsService
-//   { super();
-//     this.baseURL =}
-// }
 export const resolverTracks = {
   Query: {
     Track: async (_source: any, { id }: any, { dataSources }: any) => {

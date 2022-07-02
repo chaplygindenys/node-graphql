@@ -9,7 +9,6 @@ type Favourite {
 
 type Query {
   favourites(limit: Int, offset: Int): [Favourite]
-  favourite(id: ID!): Favourite
 }
 enum Type {
   band
@@ -19,6 +18,6 @@ enum Type {
 }
 
 type Mutation {
-  createFavourite(type: Type!, id: ID!): Favourite!
-  deleteFavourite(type: Type!, id: ID!): Delete
+  createFavourite(type: Type!, typeId: ID!): Favourite!
+  deleteFavourite(type: Type!, typeId: ID!): Delete
 }

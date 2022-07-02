@@ -4,9 +4,11 @@ import { resolvers, typeDefs } from './services.js';
 import { ArtistsAPI } from './artists/services/artists.service.js';
 import { BandsAPI } from './bands/services/bands.service.js';
 import { GenresAPI } from './genres/services/genres.service.js';
+import { FavouritesAPI } from './favourites/services/favourites.service.js';
 import { TracksAPI } from './tracks/services/trackService.js';
 import { UsersAPI } from './users/services/users.services.js';
 import { AlbumsAPI } from './albums/services/albums.service.js';
+import moment from 'moment';
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -18,6 +20,7 @@ const server = new ApolloServer({
             bandsAPI: new BandsAPI() || 'bandsAPI',
             artistsAPI: new ArtistsAPI() || 'artistsAPI',
             albumsAPI: new AlbumsAPI() || 'albumsAPI',
+            favouritesAPI: new FavouritesAPI() || 'favouritesAPI',
         };
     },
     context: ({ req }) => {
@@ -27,7 +30,7 @@ const server = new ApolloServer({
 server
     .listen()
     .then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
+    console.log(`🚀 ${console.log(moment(Date.now()))} Server ready at ${url}`);
 })
     .catch((err) => {
     console.error(err);

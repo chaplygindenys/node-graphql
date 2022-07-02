@@ -1,7 +1,7 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
 import { Track } from '../../interface';
-import { addTrueId } from '../../services';
+import { addTrueId } from '../../services.js';
 
 export class BandsAPI extends RESTDataSource {
   constructor() {
