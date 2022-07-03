@@ -4,7 +4,7 @@ import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
 export const resolverBands = {
   Query: {
-    band: async (_source: any, { id }: any, { dataSources }: any) => {
+    oneBand: async (_source: any, { id }: any, { dataSources }: any) => {
       console.log(id);
       console.log(dataSources);
 
@@ -28,7 +28,7 @@ export const resolverBands = {
         }
       }
     },
-    bands: async (
+    allBands: async (
       _source: any,
       { limit, offset }: any,
       { dataSources }: any

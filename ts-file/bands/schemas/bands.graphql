@@ -22,8 +22,8 @@ input MemberInput {
 }
 
 type Query {
-  bands(limit: Int, offset: Int): [Band]
-  band(id: ID!): Band
+  allBands(limit: Int, offset: Int): [Band]
+  oneBand(id: ID!): Band
 }
 
 type Mutation {

@@ -9,18 +9,18 @@ export class FavouritesAPI extends RESTDataSource {
         console.log(this.context.token);
         request.headers.set('Authorization', `Bearer ${this.context.token}`);
     }
-    getAllFavourite(opt) {
-        const body = this.get('', opt);
+    async getAllFavourite() {
+        const body = await this.get('');
         console.log('services: ', body);
         return body;
     }
     async putAddFavourite(favouriteItem) {
-        console.log('ttttttttttttttttt', favouriteItem);
+        console.log('servisces in', favouriteItem);
         const body = this.put('/add', favouriteItem);
         console.log('services: ', body);
         return body;
     }
-    putRemoveFavourite(favouriteItem) {
+    async putRemoveFavourite(favouriteItem) {
         const body = this.put(`/remove`, favouriteItem);
         console.log('services: ', body);
         return body;

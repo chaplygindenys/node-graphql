@@ -26,10 +26,10 @@ export class GenresAPI extends RESTDataSource {
       for (let index = 0; index < ids.length; index++) {
         const id = ids[index];
         const genre = await this.getGenre(id);
-        console.log('genre: ---->', genre);
+        console.log('getAllGenresbyIds genre: ---->', genre);
         genres.push(genre);
       }
-      console.log('A', genres);
+      console.log('getAllGenresbyIds done', genres);
       return genres;
     } catch (error) {
       if (error) {
