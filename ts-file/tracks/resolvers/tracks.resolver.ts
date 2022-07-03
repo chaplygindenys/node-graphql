@@ -1,19 +1,19 @@
-import { Track } from '../../interface';
+import { Track, TrackId } from '../../interface';
 import { addTrueId } from '../../services.js';
 
 export const resolverTracks = {
   Query: {
-    Track: async (_source: any, { id }: any, { dataSources }: any) => {
+    track: async (_source: any, { id }: any, { dataSources }: any) => {
       console.log(id);
       console.log(dataSources);
 
       try {
-        const body: Track = await dataSources.tracksAPI.getTrack(id);
+        const body: TrackId = await dataSources.tracksAPI.getTrack(id);
         console.log(body);
         return {
-          id: body._id,
+          id: body.id,
           title: body.title,
-          albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+          albums: dataSources.albumsAPI.getAlbum(body.albumId),
           bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
           duration: body.duration,
           released: body.released,
@@ -28,15 +28,14 @@ export const resolverTracks = {
         }
       }
     },
-    Tracks: async (
+    tracks: async (
       _source: any,
-      __: any,
-      { dataSources }: any,
-      context: any
+      { limit, offset }: any,
+      { dataSources }: any
     ) => {
-      console.log(dataSources);
+      console.log(dataSources, { limit, offset });
       try {
-        const body = await dataSources.tracksAPI.getAllTrack();
+        const body = await dataSources.tracksAPI.getAllTrack({ limit, offset });
         console.log(`resolver`, body);
         const trueIdforBodyItems = (arr: Track[]) => {
           let goodArr = [];
@@ -45,7 +44,7 @@ export const resolverTracks = {
             goodArr.push({
               id: body._id,
               title: body.title,
-              albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+              albums: dataSources.albumsAPI.getAlbum(body.albumId),
               bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
               duration: body.duration,
               released: body.released,
@@ -107,7 +106,7 @@ export const resolverTracks = {
           return {
             id: body._id,
             title: body.title,
-            albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+            albums: dataSources.albumsAPI.getAlbum(body.albumId),
             bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             duration: body.duration,
             released: body.released,
@@ -167,7 +166,7 @@ export const resolverTracks = {
           return {
             id: body._id,
             title: body.title,
-            albums: addTrueId(dataSources.albumsAPI.getAlbum(body.albumId)),
+            albums: dataSources.albumsAPI.getAlbum(body.albumId),
             bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             duration: body.duration,
             released: body.released,

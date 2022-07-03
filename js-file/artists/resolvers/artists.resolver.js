@@ -16,7 +16,7 @@ export const resolverArtist = {
                         const body = arr[index];
                         goodArr.push({
                             id: body._id,
-                            name: body.firstName,
+                            firstName: body.firstName,
                             secondName: body.secondName,
                             middleName: body.middleName,
                             birthDate: body.birthDate,
@@ -45,7 +45,7 @@ export const resolverArtist = {
                 console.log('resolver: ', body);
                 return {
                     id: body._id,
-                    name: body.firstName,
+                    firstName: body.firstName,
                     secondName: body.secondName,
                     middleName: body.middleName,
                     birthDate: body.birthDate,
@@ -82,7 +82,7 @@ export const resolverArtist = {
                     console.log(`resolver`, body.items);
                     return {
                         id: body._id,
-                        name: body.firstName,
+                        firstName: body.firstName,
                         secondName: body.secondName,
                         middleName: body.middleName,
                         birthDate: body.birthDate,
@@ -121,7 +121,7 @@ export const resolverArtist = {
                         firstName,
                         secondName,
                         middleName,
-                        birthDate,
+                        birthDate: new Date(Date.parse(birthDate)),
                         birthPlace,
                         country,
                         bandsIds,
@@ -130,7 +130,7 @@ export const resolverArtist = {
                     console.log(`resolver`, body.items);
                     return {
                         id: body._id,
-                        name: body.firstName,
+                        firstName: body.firstName,
                         secondName: body.secondName,
                         middleName: body.middleName,
                         birthDate: body.birthDate,

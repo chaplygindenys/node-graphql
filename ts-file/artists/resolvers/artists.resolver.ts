@@ -1,5 +1,5 @@
 import { options } from '../../config.js';
-import { Artist } from '../../interface.js';
+import { Artist, ArtistId } from '../../interface.js';
 
 export const resolverArtist = {
   Query: {
@@ -23,7 +23,7 @@ export const resolverArtist = {
             const body = arr[index];
             goodArr.push({
               id: body._id,
-              name: body.firstName,
+              firstName: body.firstName,
               secondName: body.secondName,
               middleName: body.middleName,
               birthDate: body.birthDate,
@@ -53,11 +53,11 @@ export const resolverArtist = {
       console.log(dataSources);
 
       try {
-        const body: Artist = await dataSources.artistsAPI.getArtist(id);
+        const body: ArtistId = await dataSources.artistsAPI.getArtist(id);
         console.log('resolver: ', body);
         return {
-          id: body._id,
-          name: body.firstName,
+          id: body.id,
+          firstName: body.firstName,
           secondName: body.secondName,
           middleName: body.middleName,
           birthDate: body.birthDate,
@@ -117,7 +117,7 @@ export const resolverArtist = {
           console.log(`resolver`, body.items);
           return {
             id: body._id,
-            name: body.firstName,
+            firstName: body.firstName,
             secondName: body.secondName,
             middleName: body.middleName,
             birthDate: body.birthDate,
@@ -170,7 +170,7 @@ export const resolverArtist = {
             firstName,
             secondName,
             middleName,
-            birthDate,
+            birthDate: new Date(Date.parse(birthDate)),
             birthPlace,
             country,
             bandsIds,
@@ -179,7 +179,7 @@ export const resolverArtist = {
           console.log(`resolver`, body.items);
           return {
             id: body._id,
-            name: body.firstName,
+            firstName: body.firstName,
             secondName: body.secondName,
             middleName: body.middleName,
             birthDate: body.birthDate,

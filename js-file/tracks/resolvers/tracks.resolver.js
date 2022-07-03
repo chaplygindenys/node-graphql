@@ -26,10 +26,10 @@ export const resolverTracks = {
                 }
             }
         },
-        Tracks: async (_source, __, { dataSources }, context) => {
-            console.log(dataSources);
+        Tracks: async (_source, { limit, offset }, { dataSources }) => {
+            console.log(dataSources, { limit, offset });
             try {
-                const body = await dataSources.tracksAPI.getAllTrack();
+                const body = await dataSources.tracksAPI.getAllTrack({ limit, offset });
                 console.log(`resolver`, body);
                 const trueIdforBodyItems = (arr) => {
                     let goodArr = [];

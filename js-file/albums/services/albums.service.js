@@ -34,10 +34,22 @@ export class AlbumsAPI extends RESTDataSource {
             }
         }
     }
-    getAlbum(id) {
-        const body = this.get(`/${encodeURIComponent(id)}`);
-        console.log('services: ', body);
-        return body;
+    async getAlbum(id) {
+        console.log('getalbums', id);
+        try {
+            if (id === 'idsad') {
+                throw new Error('idsad');
+            }
+            const body = this.get(`/${encodeURIComponent(id)}`);
+            console.log('services: ', body);
+            return body;
+        }
+        catch (error) {
+            if (error) {
+                console.log(error);
+                return undefined;
+            }
+        }
     }
     async postAlbum(newAlbum) {
         console.log('ttttttttttttttttt', newAlbum);

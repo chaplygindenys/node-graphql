@@ -10,16 +10,16 @@ type Track {
 }
 
 type Query {
-  Tracks(limit: Int, offset: Int): [Track]
-  Track(id: ID!): Track
+  tracks(limit: Int, offset: Int): [Track]
+  track(id: ID!): Track
 }
 
 type Mutation {
   createTrack(
     title: String!
-    albumId: String!
-    bandsIds: [ID]
-    artistsIds: [ID]
+    albumId: String
+    bandsIds: [ID]!
+    artistsIds: [ID]!
     duration: Int!
     released: Int!
     genresIds: [ID!]!

@@ -10,8 +10,8 @@ export class TracksAPI extends RESTDataSource {
         console.log(this.context.token);
         request.headers.set('Authorization', `Bearer ${this.context.token}`);
     }
-    getAllTrack() {
-        const tracks = this.get('');
+    getAllTrack({ limit, offset }) {
+        const tracks = this.get('', { limit, offset });
         console.log(tracks);
         return tracks;
     }

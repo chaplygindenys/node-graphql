@@ -6,7 +6,6 @@ type Album {
   bands: [Band]
   tracks: [Track]
   genres: [Genre]
-  image: String
 }
 
 type Query {
@@ -17,23 +16,21 @@ type Query {
 type Mutation {
   createAlbum(
     name: String!
-    released: String
+    released: Int
     artistsIds: [ID]
     bandsIds: [ID]!
     trackIds: [ID]!
     genresIds: [ID]!
-    image: String!
   ): Album!
   "---------------"
   updateAlbum(
     id: ID!
     name: String
-    released: String
+    released: Int
     artistsIds: [ID]
     bandsIds: [ID]
     trackIds: [ID]
     genresIds: [ID]
-    image: String
   ): Album!
   "---------------------"
   deleteAlbum(id: ID!): Delete

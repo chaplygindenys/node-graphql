@@ -1,12 +1,5 @@
-// import { RESTDataSource } from 'apollo-datasource-rest';
-// import { TracksService } from '../services/track.service.js';
-// import { GenresService } from '../../genres/services/genres.services.js';
-// import { ArtistsService } from '../../artists/services/artists.service.js';
-// import { BandsService } from '../../bands/services/bands.service.js';
-// import {} from 'module';
-
 import { options } from '../../config.js';
-import { Genre } from '../../interface.js';
+import { Genre, GenreId } from '../../interface.js';
 
 export const resolverGenres = {
   Query: {
@@ -51,20 +44,15 @@ export const resolverGenres = {
         }
       }
     },
-    genre: async (
-      _source: any,
-      { id }: any,
-      { dataSources }: any,
-      context: any
-    ) => {
+    genre: async (_source: any, { id }: any, { dataSources }: any) => {
       console.log(id);
       console.log(dataSources);
 
       try {
-        const body: Genre = await dataSources.genresAPI.getGenre(id);
+        const body: GenreId = await dataSources.genresAPI.getGenre(id);
         console.log('resolver: ', body);
         return {
-          id: body._id,
+          id: body.id,
           name: body.name,
           description: body.description,
           country: body.country,
@@ -86,8 +74,7 @@ export const resolverGenres = {
     createGenre: async (
       _source: any,
       { name, description, country, year }: Genre,
-      { dataSources }: any,
-      context: any
+      { dataSources }: any
     ) => {
       console.log(name, description, country, year);
       console.log(dataSources.genresAPI.context.token);
@@ -183,6 +170,7 @@ export const resolverGenres = {
         }
       } catch (err: Error | undefined | any) {
         if (err) {
+          console.log(err);
           return {
             code: 400,
             success: false,

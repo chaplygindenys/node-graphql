@@ -1,11 +1,11 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
-import { Track } from '../../interface';
-import { addTrueId } from '../../services.js';
+import { Band } from '../../interface';
+import { trueArrMembersFromBandRes } from '../utils/bands.util';
 
 export class BandsAPI extends RESTDataSource {
   constructor() {
-    // private readonly bandsService: BandsService // private readonly artistsService: ArtistsService, // private readonly genresService: GenresService, // private readonly tracksService: TracksService,
+    // private readonly bandsService: BandsService // private readonly artistsService: ArtistsService, // private readonly genresService: GenresService, // private readonly bandsService: bandsService,
     super();
     this.baseURL = `http://localhost:3003/v1/bands`;
   }
@@ -14,16 +14,24 @@ export class BandsAPI extends RESTDataSource {
     request.headers.set('Authorization', `Bearer ${this.context.token}`);
   }
 
-  getAllBand() {
-    const tracks = this.get('');
-    console.log(tracks);
-    return tracks;
+  async getAllBand() {
+    const bands = this.get('');
+    console.log(bands);
+    return bands;
   }
+
   async getBand(id: string) {
-    const track = this.get(`/${encodeURIComponent(id)}`);
-    console.log(track);
-    return track;
+    const body: Band = await this.get(`/${encodeURIComponent(id)}`);
+    return {
+      id: body._id,
+      name: body.name,
+      origin: body.origin,
+      members: trueArrMembersFromBandRes(body),
+      website: body.website,
+      genresIds: body.genresIds,
+    };
   }
+
   async getAllBandsbyIds(ids: string[]) {
     try {
       let bands = [];
@@ -31,7 +39,7 @@ export class BandsAPI extends RESTDataSource {
         const id = ids[index];
         const band = await this.getBand(id);
         console.log('band: ---->', band);
-        bands.push(addTrueId(band));
+        bands.push(band);
       }
       console.log('A', bands);
       return bands;
@@ -42,31 +50,28 @@ export class BandsAPI extends RESTDataSource {
       }
     }
   }
-  postBand({ name, origin, members, website, genresIds }: any) {
-    const newTrack = this.post('', {
+  async postBand({ name, origin, members, website, genresIds }: any) {
+    const body = this.post('', {
       name,
       origin,
       members,
       website,
       genresIds,
     });
-    console.log(newTrack);
-    return newTrack;
+    return body;
   }
-  putBand({ id, name, origin, members, website, genresIds }: any) {
-    const updateTrack = this.put(`/${id}`, {
+  async putBand({ id, name, origin, members, website, genresIds }: any) {
+    const updateband = this.put(`/${id}`, {
       name,
       origin,
       members,
       website,
       genresIds,
     });
-    console.log(updateTrack);
-    return updateTrack;
+    return updateband;
   }
   async remoweBand(id: string) {
     const body = this.delete(`/${encodeURIComponent(id)}`);
-    console.log(body);
     return body;
   }
 }

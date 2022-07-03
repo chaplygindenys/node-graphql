@@ -28,7 +28,7 @@ export class AlbumsAPI extends RESTDataSource {
         const id = ids[index];
         const album = await this.getAlbum(id);
         console.log('album: ---->', album);
-        albums.push(addTrueId(album));
+        albums.push(album);
       }
       console.log('A', albums);
       return albums;
@@ -39,10 +39,29 @@ export class AlbumsAPI extends RESTDataSource {
       }
     }
   }
-  getAlbum(id: string) {
-    const body = this.get(`/${encodeURIComponent(id)}`);
-    console.log('services: ', body);
-    return body;
+  async getAlbum(id: string) {
+    console.log('getalbums', id);
+    try {
+      if (id === 'idsad') {
+        throw new Error('idsad');
+      }
+      const body: Album = await this.get(`/${encodeURIComponent(id)}`);
+      console.log('services: ', body);
+      return {
+        id: body._id,
+        name: body.name,
+        released: body.released,
+        artistsIds: body.artistsIds,
+        bandsIds: body.bandsIds,
+        tracksIds: body.trackIds,
+        genresIds: body.genresIds,
+      };
+    } catch (error) {
+      if (error) {
+        console.log(error);
+        return undefined;
+      }
+    }
   }
   async postAlbum(newAlbum: Album) {
     console.log('ttttttttttttttttt', newAlbum);

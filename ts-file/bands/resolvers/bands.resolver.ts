@@ -5,7 +5,7 @@ import { GenresAPI } from '../../genres/services/genres.service.js';
 // import { BandsService } from '../../bands/services/bands.service.js';
 // import {} from 'module';
 
-import { Band } from '../../interface';
+import { Band, BandId } from '../../interface';
 import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
 // export class TracksResolver extends RESTDataSource {
@@ -23,13 +23,13 @@ export const resolverBands = {
       console.log(dataSources);
 
       try {
-        const body: Band = await dataSources.bandsAPI.getBand(id);
+        const body: BandId = await dataSources.bandsAPI.getBand(id);
         console.log(body);
         return {
-          id: body._id,
+          id: body.id,
           name: body.name,
           origin: body.origin,
-          members: trueArrMembersFromBandRes(body),
+          members: body.members,
           website: body.website,
           genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
         };

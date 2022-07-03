@@ -37,7 +37,7 @@ export const resolverAlbum = {
             }
         },
         album: async (_source, { id }, { dataSources }, context) => {
-            console.log(id);
+            console.log('in resolver albums ', id);
             console.log(dataSources);
             try {
                 const body = await dataSources.albumsAPI.getAlbum(id);
@@ -61,8 +61,8 @@ export const resolverAlbum = {
         },
     },
     Mutation: {
-        createAlbum: async (_source, { name, released, artistsIds, bandsIds, trackIds, genresIds, image, }, { dataSources }, context) => {
-            console.log(name, released, artistsIds, bandsIds, trackIds, genresIds, image);
+        createAlbum: async (_source, { name, released, artistsIds, bandsIds, trackIds, genresIds }, { dataSources }, context) => {
+            console.log(name, released, artistsIds, bandsIds, trackIds, genresIds);
             console.log(dataSources.albumsAPI.context.token);
             try {
                 if (dataSources.albumsAPI.context.token) {
@@ -74,7 +74,6 @@ export const resolverAlbum = {
                         bandsIds,
                         trackIds,
                         genresIds,
-                        image,
                     });
                     console.log(`resolver`, body.items);
                     return {
@@ -85,7 +84,6 @@ export const resolverAlbum = {
                         bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
                         tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
                         genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-                        image: body.image,
                     };
                 }
                 else {
@@ -98,7 +96,7 @@ export const resolverAlbum = {
                 }
             }
         },
-        updateAlbum: async (_source, { id, name, released, artistsIds, bandsIds, trackIds, genresIds, image, }, { dataSources }, context) => {
+        updateAlbum: async (_source, { id, name, released, artistsIds, bandsIds, trackIds, genresIds }, { dataSources }, context) => {
             console.log(id, {
                 name,
                 released,
@@ -106,7 +104,6 @@ export const resolverAlbum = {
                 bandsIds,
                 trackIds,
                 genresIds,
-                image,
             });
             console.log(dataSources.albumsAPI);
             try {
@@ -119,7 +116,6 @@ export const resolverAlbum = {
                         bandsIds,
                         trackIds,
                         genresIds,
-                        image,
                     });
                     console.log(`resolver`, body.items);
                     return {
@@ -130,7 +126,6 @@ export const resolverAlbum = {
                         bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
                         tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
                         genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-                        image: body.image,
                     };
                 }
                 else {
@@ -143,7 +138,7 @@ export const resolverAlbum = {
                 }
             }
         },
-        deleteAlbum: async (_source, { id }, { dataSources }, context) => {
+        deleteAlbum: async (_source, { id }, { dataSources }) => {
             console.log(id);
             console.log(dataSources.albumsAPI.context.token);
             try {

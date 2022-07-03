@@ -1,5 +1,5 @@
 import { options } from '../../config.js';
-import { Album } from '../../interface.js';
+import { Album, AlbumId } from '../../interface.js';
 
 export const resolverAlbum = {
   Query: {
@@ -44,20 +44,15 @@ export const resolverAlbum = {
         }
       }
     },
-    album: async (
-      _source: any,
-      { id }: any,
-      { dataSources }: any,
-      context: any
-    ) => {
-      console.log(id);
+    album: async (_source: any, { id }: any, { dataSources }: any) => {
+      console.log('in resolver albums ', id);
       console.log(dataSources);
 
       try {
-        const body: Album = await dataSources.albumsAPI.getAlbum(id);
+        const body: AlbumId = await dataSources.albumsAPI.getAlbum(id);
         console.log('resolver: ', body);
         return {
-          id: body._id,
+          id: body.id,
           name: body.name,
           released: body.released,
           artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
@@ -76,27 +71,11 @@ export const resolverAlbum = {
   Mutation: {
     createAlbum: async (
       _source: any,
-      {
-        name,
-        released,
-        artistsIds,
-        bandsIds,
-        trackIds,
-        genresIds,
-        image,
-      }: Album,
+      { name, released, artistsIds, bandsIds, trackIds, genresIds }: Album,
       { dataSources }: any,
       context: any
     ) => {
-      console.log(
-        name,
-        released,
-        artistsIds,
-        bandsIds,
-        trackIds,
-        genresIds,
-        image
-      );
+      console.log(name, released, artistsIds, bandsIds, trackIds, genresIds);
       console.log(dataSources.albumsAPI.context.token);
       // console.log(context);
       try {
@@ -109,7 +88,6 @@ export const resolverAlbum = {
             bandsIds,
             trackIds,
             genresIds,
-            image,
           });
           console.log(`resolver`, body.items);
           return {
@@ -120,7 +98,6 @@ export const resolverAlbum = {
             bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
             genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-            image: body.image,
           };
         } else {
           throw new Error('AutorithationError');
@@ -133,16 +110,7 @@ export const resolverAlbum = {
     },
     updateAlbum: async (
       _source: any,
-      {
-        id,
-        name,
-        released,
-        artistsIds,
-        bandsIds,
-        trackIds,
-        genresIds,
-        image,
-      }: any,
+      { id, name, released, artistsIds, bandsIds, trackIds, genresIds }: any,
       { dataSources }: any,
       context: any
     ) => {
@@ -153,7 +121,6 @@ export const resolverAlbum = {
         bandsIds,
         trackIds,
         genresIds,
-        image,
       });
       console.log(dataSources.albumsAPI);
       // console.log(context);
@@ -167,7 +134,6 @@ export const resolverAlbum = {
             bandsIds,
             trackIds,
             genresIds,
-            image,
           });
           console.log(`resolver`, body.items);
           return {
@@ -178,7 +144,6 @@ export const resolverAlbum = {
             bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
             genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-            image: body.image,
           };
         } else {
           throw new Error('AutorithationError');
@@ -189,12 +154,7 @@ export const resolverAlbum = {
         }
       }
     },
-    deleteAlbum: async (
-      _source: any,
-      { id }: any,
-      { dataSources }: any,
-      context: any
-    ) => {
+    deleteAlbum: async (_source: any, { id }: any, { dataSources }: any) => {
       console.log(id);
       console.log(dataSources.albumsAPI.context.token);
 
