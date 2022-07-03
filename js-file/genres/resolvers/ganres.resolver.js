@@ -38,14 +38,14 @@ export const resolverGenres = {
                 }
             }
         },
-        genre: async (_source, { id }, { dataSources }, context) => {
+        genre: async (_source, { id }, { dataSources }) => {
             console.log(id);
             console.log(dataSources);
             try {
                 const body = await dataSources.genresAPI.getGenre(id);
                 console.log('resolver: ', body);
                 return {
-                    id: body._id,
+                    id: body.id,
                     name: body.name,
                     description: body.description,
                     country: body.country,
@@ -65,7 +65,7 @@ export const resolverGenres = {
         },
     },
     Mutation: {
-        createGenre: async (_source, { name, description, country, year }, { dataSources }, context) => {
+        createGenre: async (_source, { name, description, country, year }, { dataSources }) => {
             console.log(name, description, country, year);
             console.log(dataSources.genresAPI.context.token);
             try {
@@ -153,6 +153,7 @@ export const resolverGenres = {
             }
             catch (err) {
                 if (err) {
+                    console.log(err);
                     return {
                         code: 400,
                         success: false,

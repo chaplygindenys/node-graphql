@@ -6,8 +6,7 @@ export const resolverAlbum = {
     albums: async (
       _source: any,
       { offset, limit }: any,
-      { dataSources }: any,
-      context: any
+      { dataSources }: any
     ) => {
       console.log(dataSources.albumsAPI);
       console.log(offset, limit);

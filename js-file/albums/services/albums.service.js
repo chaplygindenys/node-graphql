@@ -1,6 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import console from 'console';
-import { addTrueId } from '../../services.js';
 export class AlbumsAPI extends RESTDataSource {
     constructor() {
         super();
@@ -22,7 +21,7 @@ export class AlbumsAPI extends RESTDataSource {
                 const id = ids[index];
                 const album = await this.getAlbum(id);
                 console.log('album: ---->', album);
-                albums.push(addTrueId(album));
+                albums.push(album);
             }
             console.log('A', albums);
             return albums;
@@ -40,9 +39,17 @@ export class AlbumsAPI extends RESTDataSource {
             if (id === 'idsad') {
                 throw new Error('idsad');
             }
-            const body = this.get(`/${encodeURIComponent(id)}`);
+            const body = await this.get(`/${encodeURIComponent(id)}`);
             console.log('services: ', body);
-            return body;
+            return {
+                id: body._id,
+                name: body.name,
+                released: body.released,
+                artistsIds: body.artistsIds,
+                bandsIds: body.bandsIds,
+                tracksIds: body.trackIds,
+                genresIds: body.genresIds,
+            };
         }
         catch (error) {
             if (error) {

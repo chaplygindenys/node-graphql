@@ -1,7 +1,7 @@
 import { options } from '../../config.js';
 export const resolverAlbum = {
     Query: {
-        albums: async (_source, { offset, limit }, { dataSources }, context) => {
+        albums: async (_source, { offset, limit }, { dataSources }) => {
             console.log(dataSources.albumsAPI);
             console.log(offset, limit);
             try {
@@ -36,14 +36,14 @@ export const resolverAlbum = {
                 }
             }
         },
-        album: async (_source, { id }, { dataSources }, context) => {
+        album: async (_source, { id }, { dataSources }) => {
             console.log('in resolver albums ', id);
             console.log(dataSources);
             try {
                 const body = await dataSources.albumsAPI.getAlbum(id);
                 console.log('resolver: ', body);
                 return {
-                    id: body._id,
+                    id: body.id,
                     name: body.name,
                     released: body.released,
                     artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),

@@ -1,6 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import console from 'console';
-import { addTrueId } from '../../services.js';
 export class TracksAPI extends RESTDataSource {
     constructor() {
         super();
@@ -10,15 +9,21 @@ export class TracksAPI extends RESTDataSource {
         console.log(this.context.token);
         request.headers.set('Authorization', `Bearer ${this.context.token}`);
     }
-    getAllTrack({ limit, offset }) {
-        const tracks = this.get('', { limit, offset });
-        console.log(tracks);
-        return tracks;
+    async getAllTrack(opt) {
+        const body = this.get('', opt);
+        return body;
     }
     async getTrack(id) {
-        const track = this.get(`/${encodeURIComponent(id)}`);
-        console.log(track);
-        return track;
+        const body = await this.get(`/${encodeURIComponent(id)}`);
+        return {
+            id: body._id,
+            title: body.title,
+            albums: body.albumId,
+            bands: body.bandsIds,
+            duration: body.duration,
+            released: body.released,
+            genres: body.genresIds,
+        };
     }
     async getAllTracksbyIds(ids) {
         try {
@@ -27,7 +32,7 @@ export class TracksAPI extends RESTDataSource {
                 const id = ids[index];
                 const track = await this.getTrack(id);
                 console.log('track: ---->', track);
-                tracks.push(addTrueId(track));
+                tracks.push(track);
             }
             console.log('A', tracks);
             return tracks;
@@ -39,8 +44,8 @@ export class TracksAPI extends RESTDataSource {
             }
         }
     }
-    postTrack({ title, albumId, bandsIds, artistsIds, duration, released, genresIds, }) {
-        const newTrack = this.post('', {
+    async postTrack({ title, albumId, bandsIds, artistsIds, duration, released, genresIds, }) {
+        const body = this.post('', {
             title,
             albumId,
             bandsIds,
@@ -49,11 +54,10 @@ export class TracksAPI extends RESTDataSource {
             released,
             genresIds,
         });
-        console.log(newTrack);
-        return newTrack;
+        return body;
     }
-    putTrack({ id, title, albumId, bandsIds, artistsIds, duration, released, genresIds, }) {
-        const updateTrack = this.put(`/${id}`, {
+    async putTrack({ id, title, albumId, bandsIds, artistsIds, duration, released, genresIds, }) {
+        const body = this.put(`/${id}`, {
             id,
             title,
             albumId,
@@ -63,8 +67,7 @@ export class TracksAPI extends RESTDataSource {
             released,
             genresIds,
         });
-        console.log(updateTrack);
-        return updateTrack;
+        return body;
     }
     async remoweTrack(id) {
         const body = this.delete(`/${encodeURIComponent(id)}`);

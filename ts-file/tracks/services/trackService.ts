@@ -13,9 +13,9 @@ export class TracksAPI extends RESTDataSource {
     request.headers.set('Authorization', `Bearer ${this.context.token}`);
   }
 
-  async getAllTrack({ limit, offset }: any) {
-    const tracks = this.get('', { limit, offset });
-    return tracks;
+  async getAllTrack(opt: any) {
+    const body = this.get('', opt);
+    return body;
   }
 
   async getTrack(id: string) {

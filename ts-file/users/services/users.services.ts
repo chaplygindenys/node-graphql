@@ -3,8 +3,6 @@ import { Context } from 'apollo-server-core';
 import console from 'console';
 import { ArgumentNode } from 'graphql';
 
-import { BodyUser, User } from '../../interface';
-
 export class UsersAPI extends RESTDataSource {
   constructor() {
     // private readonly bandsService: BandsService // private readonly artistsService: ArtistsService, // private readonly genresService: GenresService, // private readonly tracksService: TracksService,

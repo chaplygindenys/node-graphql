@@ -1,7 +1,7 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
 import { Band } from '../../interface';
-import { trueArrMembersFromBandRes } from '../utils/bands.util';
+import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
 export class BandsAPI extends RESTDataSource {
   constructor() {
@@ -14,8 +14,8 @@ export class BandsAPI extends RESTDataSource {
     request.headers.set('Authorization', `Bearer ${this.context.token}`);
   }
 
-  async getAllBand() {
-    const bands = this.get('');
+  async getAllBand(opt: any) {
+    const bands = this.get('', opt);
     console.log(bands);
     return bands;
   }

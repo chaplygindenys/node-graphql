@@ -1,41 +1,22 @@
+import { options } from '../../config.js';
 import { Track, TrackId } from '../../interface';
-import { addTrueId } from '../../services.js';
 
 export const resolverTracks = {
   Query: {
-    track: async (_source: any, { id }: any, { dataSources }: any) => {
-      console.log(id);
-      console.log(dataSources);
-
-      try {
-        const body: TrackId = await dataSources.tracksAPI.getTrack(id);
-        console.log(body);
-        return {
-          id: body.id,
-          title: body.title,
-          albums: dataSources.albumsAPI.getAlbum(body.albumId),
-          bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-          duration: body.duration,
-          released: body.released,
-          genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-        };
-      } catch (err: Error | undefined | any) {
-        if (err) {
-          console.error(err);
-          return {
-            message: err.message,
-          };
-        }
-      }
-    },
     tracks: async (
       _source: any,
       { limit, offset }: any,
       { dataSources }: any
     ) => {
-      console.log(dataSources, { limit, offset });
+      console.log(dataSources.tracksAPI, {
+        limit: limit || options.defaultLimit,
+        offset: offset || options.defaultOffset,
+      });
       try {
-        const body = await dataSources.tracksAPI.getAllTrack({ limit, offset });
+        const body = await dataSources.tracksAPI.getAllTrack({
+          limit: limit || options.defaultLimit,
+          offset: offset || options.defaultOffset,
+        });
         console.log(`resolver`, body);
         const trueIdforBodyItems = (arr: Track[]) => {
           let goodArr = [];
@@ -58,6 +39,29 @@ export const resolverTracks = {
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);
+        }
+      }
+    },
+
+    track: async (_source: any, { id }: any, { dataSources }: any) => {
+      console.log(id);
+      console.log(dataSources.tracksAPI);
+
+      try {
+        const body: TrackId = await dataSources.tracksAPI.getTrack(id);
+        console.log(body);
+        return {
+          id: body.id,
+          title: body.title,
+          albums: dataSources.albumsAPI.getAlbum(body.albumId),
+          bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
+          duration: body.duration,
+          released: body.released,
+          genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+        };
+      } catch (err: Error | undefined | any) {
+        if (err) {
+          console.error(err);
           return {
             message: err.message,
           };
@@ -65,7 +69,6 @@ export const resolverTracks = {
       }
     },
   },
-
   Mutation: {
     createTrack: async (
       _source: any,

@@ -43,14 +43,9 @@ export const resolverArtist = {
         }
       }
     },
-    artist: async (
-      _source: any,
-      { id }: any,
-      { dataSources }: any,
-      context: any
-    ) => {
+    artist: async (_source: any, { id }: any, { dataSources }: any) => {
       console.log(id);
-      console.log(dataSources);
+      console.log(dataSources.artistsAPI);
 
       try {
         const body: ArtistId = await dataSources.artistsAPI.getArtist(id);
@@ -108,7 +103,7 @@ export const resolverArtist = {
             firstName,
             secondName,
             middleName,
-            birthDate: new Date(Date.parse(birthDate)),
+            birthDate,
             birthPlace,
             country,
             bandsIds,
@@ -170,7 +165,7 @@ export const resolverArtist = {
             firstName,
             secondName,
             middleName,
-            birthDate: new Date(Date.parse(birthDate)),
+            birthDate,
             birthPlace,
             country,
             bandsIds,

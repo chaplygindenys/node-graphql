@@ -1,3 +1,4 @@
+import { options } from '../../config.js';
 import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 export const resolverBands = {
     Query: {
@@ -8,10 +9,10 @@ export const resolverBands = {
                 const body = await dataSources.bandsAPI.getBand(id);
                 console.log(body);
                 return {
-                    id: body._id,
+                    id: body.id,
                     name: body.name,
                     origin: body.origin,
-                    members: trueArrMembersFromBandRes(body),
+                    members: body.members,
                     website: body.website,
                     genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
                 };
@@ -25,10 +26,13 @@ export const resolverBands = {
                 }
             }
         },
-        bands: async (_source, __, { dataSources }, context) => {
-            console.log(dataSources);
+        bands: async (_source, { limit, offset }, { dataSources }) => {
+            console.log(dataSources.bandsAPI);
             try {
-                const body = await dataSources.bandsAPI.getAllBand();
+                const body = await dataSources.bandsAPI.getAllBand({
+                    limit: limit || options.defaultLimit,
+                    offset: offset || options.defaultOffset,
+                });
                 console.log(`resolver`, body);
                 const trueIdforBodyItems = (arr) => {
                     let goodArr = [];

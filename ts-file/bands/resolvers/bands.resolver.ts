@@ -1,21 +1,7 @@
-// import { RESTDataSource } from 'apollo-datasource-rest';
-// import { TracksService } from '../services/track.service.js';
-import { GenresAPI } from '../../genres/services/genres.service.js';
-// import { ArtistsService } from '../../artists/services/artists.service.js';
-// import { BandsService } from '../../bands/services/bands.service.js';
-// import {} from 'module';
-
+import { options } from '../../config.js';
 import { Band, BandId } from '../../interface';
 import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
-// export class TracksResolver extends RESTDataSource {
-//   constructor() // private readonly tracksService: TracksService,
-//   // private readonly genresService: GenresService,
-//   // private readonly artistsService: ArtistsService,
-//   // private readonly bandsService: BandsService
-//   { super();
-//     this.baseURL =}
-// }
 export const resolverBands = {
   Query: {
     band: async (_source: any, { id }: any, { dataSources }: any) => {
@@ -44,13 +30,15 @@ export const resolverBands = {
     },
     bands: async (
       _source: any,
-      __: any,
-      { dataSources }: any,
-      context: any
+      { limit, offset }: any,
+      { dataSources }: any
     ) => {
-      console.log(dataSources);
+      console.log(dataSources.bandsAPI);
       try {
-        const body = await dataSources.bandsAPI.getAllBand();
+        const body = await dataSources.bandsAPI.getAllBand({
+          limit: limit || options.defaultLimit,
+          offset: offset || options.defaultOffset,
+        });
         console.log(`resolver`, body);
         const trueIdforBodyItems = (arr: Band[]) => {
           let goodArr = [];

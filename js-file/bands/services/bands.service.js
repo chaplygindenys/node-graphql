@@ -1,6 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import console from 'console';
-import { addTrueId } from '../../services.js';
+import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 export class BandsAPI extends RESTDataSource {
     constructor() {
         super();
@@ -10,15 +10,21 @@ export class BandsAPI extends RESTDataSource {
         console.log(this.context.token);
         request.headers.set('Authorization', `Bearer ${this.context.token}`);
     }
-    getAllBand() {
-        const tracks = this.get('');
-        console.log(tracks);
-        return tracks;
+    async getAllBand(opt) {
+        const bands = this.get('', opt);
+        console.log(bands);
+        return bands;
     }
     async getBand(id) {
-        const track = this.get(`/${encodeURIComponent(id)}`);
-        console.log(track);
-        return track;
+        const body = await this.get(`/${encodeURIComponent(id)}`);
+        return {
+            id: body._id,
+            name: body.name,
+            origin: body.origin,
+            members: trueArrMembersFromBandRes(body),
+            website: body.website,
+            genresIds: body.genresIds,
+        };
     }
     async getAllBandsbyIds(ids) {
         try {
@@ -27,7 +33,7 @@ export class BandsAPI extends RESTDataSource {
                 const id = ids[index];
                 const band = await this.getBand(id);
                 console.log('band: ---->', band);
-                bands.push(addTrueId(band));
+                bands.push(band);
             }
             console.log('A', bands);
             return bands;
@@ -39,31 +45,28 @@ export class BandsAPI extends RESTDataSource {
             }
         }
     }
-    postBand({ name, origin, members, website, genresIds }) {
-        const newTrack = this.post('', {
+    async postBand({ name, origin, members, website, genresIds }) {
+        const body = this.post('', {
             name,
             origin,
             members,
             website,
             genresIds,
         });
-        console.log(newTrack);
-        return newTrack;
+        return body;
     }
-    putBand({ id, name, origin, members, website, genresIds }) {
-        const updateTrack = this.put(`/${id}`, {
+    async putBand({ id, name, origin, members, website, genresIds }) {
+        const updateband = this.put(`/${id}`, {
             name,
             origin,
             members,
             website,
             genresIds,
         });
-        console.log(updateTrack);
-        return updateTrack;
+        return updateband;
     }
     async remoweBand(id) {
         const body = this.delete(`/${encodeURIComponent(id)}`);
-        console.log(body);
         return body;
     }
 }

@@ -1,6 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import console from 'console';
-import { addTrueId } from '../../services.js';
 export class ArtistsAPI extends RESTDataSource {
     constructor() {
         super();
@@ -10,7 +9,7 @@ export class ArtistsAPI extends RESTDataSource {
         console.log(this.context.token);
         request.headers.set('Authorization', `Bearer ${this.context.token}`);
     }
-    getAllArtist(opt) {
+    async getAllArtist(opt) {
         const body = this.get('', opt);
         console.log('services: ', body);
         return body;
@@ -22,7 +21,7 @@ export class ArtistsAPI extends RESTDataSource {
                 const id = ids[index];
                 const artist = await this.getArtist(id);
                 console.log('artist: ---->', artist);
-                artists.push(addTrueId(artist));
+                artists.push(artist);
             }
             console.log('A', artists);
             return artists;
@@ -34,10 +33,20 @@ export class ArtistsAPI extends RESTDataSource {
             }
         }
     }
-    getArtist(id) {
-        const body = this.get(`/${encodeURIComponent(id)}`);
+    async getArtist(id) {
+        const body = await this.get(`/${encodeURIComponent(id)}`);
         console.log('services: ', body);
-        return body;
+        return {
+            id: body._id,
+            firstName: body.firstName,
+            secondName: body.secondName,
+            middleName: body.middleName,
+            birthDate: body.birthDate,
+            birthPlace: body.birthPlace,
+            country: body.country,
+            bandsIds: body.bandsIds,
+            instrument: body.instruments,
+        };
     }
     async postArtist(newArtist) {
         console.log('ttttttttttttttttt', newArtist);
@@ -45,12 +54,12 @@ export class ArtistsAPI extends RESTDataSource {
         console.log('services: ', body);
         return body;
     }
-    putArtist(id, upArtist) {
+    async putArtist(id, upArtist) {
         const body = this.put(`/${encodeURIComponent(id)}`, upArtist);
         console.log('services: ', body);
         return body;
     }
-    remoweArtist(id) {
+    async remoweArtist(id) {
         const body = this.delete(`/${encodeURIComponent(id)}`);
         console.log('services: ', body);
         return body;

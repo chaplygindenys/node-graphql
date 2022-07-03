@@ -2,7 +2,6 @@ import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
 
 import { Album } from '../../interface';
-import { addTrueId } from '../../services.js';
 
 export class AlbumsAPI extends RESTDataSource {
   constructor() {
