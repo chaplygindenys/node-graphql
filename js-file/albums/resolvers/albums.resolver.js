@@ -19,9 +19,9 @@ export const resolverAlbum = {
                             name: body.name,
                             released: body.released,
                             artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                            tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
-                            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                            tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
+                            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
                             image: body.image,
                         });
                     }
@@ -40,16 +40,16 @@ export const resolverAlbum = {
             console.log('in resolver albums ', id);
             console.log(dataSources);
             try {
-                const body = await dataSources.albumsAPI.getAlbum(id);
+                const body = await dataSources.albumsAPI.getAlbum(id, dataSources);
                 console.log('resolver: ', body);
                 return {
                     id: body.id,
                     name: body.name,
                     released: body.released,
-                    artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                    bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                    tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
-                    genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+                    artists: body.artists,
+                    bands: body.bands,
+                    tracks: body.tracks,
+                    genres: body.genres,
                     image: body.image,
                 };
             }
@@ -80,10 +80,10 @@ export const resolverAlbum = {
                         id: body._id,
                         name: body.name,
                         released: body.released,
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
+                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
                     };
                 }
                 else {
@@ -122,10 +122,10 @@ export const resolverAlbum = {
                         id: body._id,
                         name: body.name,
                         released: body.released,
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
+                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
                     };
                 }
                 else {

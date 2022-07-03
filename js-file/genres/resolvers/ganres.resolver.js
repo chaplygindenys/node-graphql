@@ -42,7 +42,7 @@ export const resolverGenres = {
             console.log(id);
             console.log(dataSources);
             try {
-                const body = await dataSources.genresAPI.getGenre(id);
+                const body = await dataSources.genresAPI.getGenre(id, dataSources);
                 console.log('resolver: ', body);
                 return {
                     id: body.id,

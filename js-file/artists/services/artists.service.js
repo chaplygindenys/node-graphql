@@ -14,12 +14,12 @@ export class ArtistsAPI extends RESTDataSource {
         console.log('services: ', body);
         return body;
     }
-    async getAllArtistsbyIds(ids) {
+    async getAllArtistsbyIds(ids, dataSources) {
         try {
             let artists = [];
             for (let index = 0; index < ids.length; index++) {
                 const id = ids[index];
-                const artist = await this.getArtist(id);
+                const artist = await this.getArtist(id, dataSources);
                 console.log('artist: ---->', artist);
                 artists.push(artist);
             }
@@ -33,7 +33,7 @@ export class ArtistsAPI extends RESTDataSource {
             }
         }
     }
-    async getArtist(id) {
+    async getArtist(id, dataSources) {
         const body = await this.get(`/${encodeURIComponent(id)}`);
         console.log('services: ', body);
         return {
@@ -44,8 +44,8 @@ export class ArtistsAPI extends RESTDataSource {
             birthDate: body.birthDate,
             birthPlace: body.birthPlace,
             country: body.country,
-            bandsIds: body.bandsIds,
-            instrument: body.instruments,
+            bandsIds: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+            instruments: body.instruments,
         };
     }
     async postArtist(newArtist) {

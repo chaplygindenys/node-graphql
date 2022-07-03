@@ -29,8 +29,11 @@ export const resolverArtist = {
               birthDate: body.birthDate,
               birthPlace: body.birthPlace,
               country: body.country,
-              bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-              instrument: body.instruments,
+              bands: dataSources.bandsAPI.getAllBandsbyIds(
+                body.bandsIds,
+                dataSources
+              ),
+              instruments: body.instruments,
             });
           }
           console.log(goodArr);
@@ -48,7 +51,10 @@ export const resolverArtist = {
       console.log(dataSources.artistsAPI);
 
       try {
-        const body: ArtistId = await dataSources.artistsAPI.getArtist(id);
+        const body: any = await dataSources.artistsAPI.getArtist(
+          id,
+          dataSources
+        );
         console.log('resolver: ', body);
         return {
           id: body.id,
@@ -58,8 +64,8 @@ export const resolverArtist = {
           birthDate: body.birthDate,
           birthPlace: body.birthPlace,
           country: body.country,
-          bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-          instrument: body.instruments,
+          bands: body.bands,
+          instruments: body.instruments,
         };
       } catch (err: Error | undefined | any) {
         if (err) {
@@ -118,8 +124,11 @@ export const resolverArtist = {
             birthDate: body.birthDate,
             birthPlace: body.birthPlace,
             country: body.country,
-            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-            instrument: body.instruments,
+            bands: dataSources.bandsAPI.getAllBandsbyIds(
+              body.bandsIds,
+              dataSources
+            ),
+            instruments: body.instruments,
           };
         } else {
           throw new Error('AutorithationError');
@@ -180,8 +189,11 @@ export const resolverArtist = {
             birthDate: body.birthDate,
             birthPlace: body.birthPlace,
             country: body.country,
-            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-            instrument: body.instruments,
+            bands: dataSources.bandsAPI.getAllBandsbyIds(
+              body.bandsIds,
+              dataSources
+            ),
+            instruments: body.instruments,
           };
         } else {
           throw new Error('AutorithationError');

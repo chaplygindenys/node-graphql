@@ -25,11 +25,21 @@ export const resolverTracks = {
             goodArr.push({
               id: body._id,
               title: body.title,
-              albums: dataSources.albumsAPI.getAlbum(body.albumId),
-              bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
               duration: body.duration,
               released: body.released,
-              genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+              album: dataSources.albumsAPI.getAlbum(body.albumId, dataSources),
+              bands: dataSources.bandsAPI.getAllBandsbyIds(
+                body.bandsIds,
+                dataSources
+              ),
+              genres: dataSources.genresAPI.getAllGenresbyIds(
+                body.genresIds,
+                dataSources
+              ),
+              artists: dataSources.artistsAPI.getAllArtistsbyIds(
+                body.artistsIds,
+                dataSources
+              ),
             });
           }
           console.log(goodArr);
@@ -48,16 +58,17 @@ export const resolverTracks = {
       console.log(dataSources.tracksAPI);
 
       try {
-        const body: TrackId = await dataSources.tracksAPI.getTrack(id);
+        const body: any = await dataSources.tracksAPI.getTrack(id, dataSources);
         console.log(body);
         return {
           id: body.id,
           title: body.title,
-          albums: dataSources.albumsAPI.getAlbum(body.albumId),
-          bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
           duration: body.duration,
           released: body.released,
-          genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+          album: body.album,
+          bands: body.bands,
+          genres: body.genres,
+          artists: body.artists,
         };
       } catch (err: Error | undefined | any) {
         if (err) {
@@ -109,11 +120,21 @@ export const resolverTracks = {
           return {
             id: body._id,
             title: body.title,
-            albums: dataSources.albumsAPI.getAlbum(body.albumId),
-            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             duration: body.duration,
             released: body.released,
-            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+            album: dataSources.albumsAPI.getAlbum(body.albumId, dataSources),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(
+              body.bandsIds,
+              dataSources
+            ),
+            genres: dataSources.genresAPI.getAllGenresbyIds(
+              body.genresIds,
+              dataSources
+            ),
+            artists: dataSources.artistsAPI.getAllArtistsbyIds(
+              body.artistsIds,
+              dataSources
+            ),
           };
         } else {
           throw new Error('AutorithationError');
@@ -169,11 +190,21 @@ export const resolverTracks = {
           return {
             id: body._id,
             title: body.title,
-            albums: dataSources.albumsAPI.getAlbum(body.albumId),
-            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
             duration: body.duration,
             released: body.released,
-            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+            album: dataSources.albumsAPI.getAlbum(body.albumId, dataSources),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(
+              body.bandsIds,
+              dataSources
+            ),
+            genres: dataSources.genresAPI.getAllGenresbyIds(
+              body.genresIds,
+              dataSources
+            ),
+            artists: dataSources.artistsAPI.getAllArtistsbyIds(
+              body.artistsIds,
+              dataSources
+            ),
           };
         } else {
           throw new Error('AutorithationError');

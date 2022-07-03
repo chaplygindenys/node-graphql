@@ -9,7 +9,7 @@ export const resolverBands = {
       console.log(dataSources);
 
       try {
-        const body: BandId = await dataSources.bandsAPI.getBand(id);
+        const body: any = await dataSources.bandsAPI.getBand(id, dataSources);
         console.log(body);
         return {
           id: body.id,
@@ -17,7 +17,7 @@ export const resolverBands = {
           origin: body.origin,
           members: body.members,
           website: body.website,
-          genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+          genres: body.genres,
         };
       } catch (err: Error | undefined | any) {
         if (err) {
@@ -50,7 +50,10 @@ export const resolverBands = {
               origin: body.origin,
               members: trueArrMembersFromBandRes(body),
               website: body.website,
-              genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+              genres: dataSources.genresAPI.getAllGenresbyIds(
+                body.genresIds,
+                dataSources
+              ),
             });
           }
           console.log(goodArr);
@@ -94,7 +97,8 @@ export const resolverBands = {
             members: trueArrMembersFromBandRes(body),
             website: body.website,
             genres: await dataSources.genresAPI.getAllGenresbyIds(
-              body.genresIds
+              body.genresIds,
+              dataSources
             ),
           };
         } else {
@@ -136,7 +140,8 @@ export const resolverBands = {
             members: trueArrMembersFromBandRes(body),
             website: body.website,
             genres: await dataSources.genresAPI.getAllGenresbyIds(
-              body.genresIds
+              body.genresIds,
+              dataSources
             ),
           };
         } else {

@@ -22,8 +22,8 @@ export const resolverArtist = {
                             birthDate: body.birthDate,
                             birthPlace: body.birthPlace,
                             country: body.country,
-                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                            instrument: body.instruments,
+                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                            instruments: body.instruments,
                         });
                     }
                     console.log(goodArr);
@@ -41,7 +41,7 @@ export const resolverArtist = {
             console.log(id);
             console.log(dataSources.artistsAPI);
             try {
-                const body = await dataSources.artistsAPI.getArtist(id);
+                const body = await dataSources.artistsAPI.getArtist(id, dataSources);
                 console.log('resolver: ', body);
                 return {
                     id: body.id,
@@ -51,8 +51,8 @@ export const resolverArtist = {
                     birthDate: body.birthDate,
                     birthPlace: body.birthPlace,
                     country: body.country,
-                    bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                    instrument: body.instruments,
+                    bands: body.bands,
+                    instruments: body.instruments,
                 };
             }
             catch (err) {
@@ -88,8 +88,8 @@ export const resolverArtist = {
                         birthDate: body.birthDate,
                         birthPlace: body.birthPlace,
                         country: body.country,
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                        instrument: body.instruments,
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                        instruments: body.instruments,
                     };
                 }
                 else {
@@ -136,8 +136,8 @@ export const resolverArtist = {
                         birthDate: body.birthDate,
                         birthPlace: body.birthPlace,
                         country: body.country,
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                        instrument: body.instruments,
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                        instruments: body.instruments,
                     };
                 }
                 else {

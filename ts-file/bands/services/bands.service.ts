@@ -20,7 +20,7 @@ export class BandsAPI extends RESTDataSource {
     return bands;
   }
 
-  async getBand(id: string) {
+  async getBand(id: string, dataSources: any) {
     const body: Band = await this.get(`/${encodeURIComponent(id)}`);
     return {
       id: body._id,
@@ -28,16 +28,16 @@ export class BandsAPI extends RESTDataSource {
       origin: body.origin,
       members: trueArrMembersFromBandRes(body),
       website: body.website,
-      genresIds: body.genresIds,
+      genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
     };
   }
 
-  async getAllBandsbyIds(ids: string[]) {
+  async getAllBandsbyIds(ids: string[], dataSources: any) {
     try {
       let bands = [];
       for (let index = 0; index < ids.length; index++) {
         const id = ids[index];
-        const band = await this.getBand(id);
+        const band = await this.getBand(id, dataSources);
         console.log('band: ---->', band);
         bands.push(band);
       }

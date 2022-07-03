@@ -49,7 +49,10 @@ export const resolverGenres = {
       console.log(dataSources);
 
       try {
-        const body: GenreId = await dataSources.genresAPI.getGenre(id);
+        const body: GenreId = await dataSources.genresAPI.getGenre(
+          id,
+          dataSources
+        );
         console.log('resolver: ', body);
         return {
           id: body.id,

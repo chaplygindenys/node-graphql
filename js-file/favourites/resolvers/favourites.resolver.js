@@ -10,10 +10,10 @@ export const resolverFavourite = {
                     const go = await {
                         id: body._id,
                         userId: body.userId,
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.tracksIds),
-                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.tracksIds, dataSources),
+                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
+                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
                     };
                     console.log('done', go);
                     return go;
@@ -44,10 +44,10 @@ export const resolverFavourite = {
                     return {
                         id: body._id,
                         userId: body.userId,
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.tracksIds),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
+                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.tracksIds, dataSources),
+                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
+                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
                     };
                 }
                 else {
