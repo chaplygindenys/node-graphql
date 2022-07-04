@@ -44,7 +44,7 @@ export class ArtistsAPI extends RESTDataSource {
             birthDate: body.birthDate,
             birthPlace: body.birthPlace,
             country: body.country,
-            bandsIds: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
+            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
             instruments: body.instruments,
         };
     }

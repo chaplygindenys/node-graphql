@@ -1,5 +1,6 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
+import { BandsAPI } from '../../bands/services/bands.service.js';
 
 import { Artist } from '../../interface';
 
@@ -49,13 +50,11 @@ export class ArtistsAPI extends RESTDataSource {
       birthDate: body.birthDate,
       birthPlace: body.birthPlace,
       country: body.country,
-      bandsIds: dataSources.bandsAPI.getAllBandsbyIds(
-        body.bandsIds,
-        dataSources
-      ),
+      bands: BandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
       instruments: body.instruments,
     };
   }
+
   async postArtist(newArtist: Artist) {
     console.log('ttttttttttttttttt', newArtist);
     const body = this.post('', newArtist);
