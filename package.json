@@ -7,6 +7,7 @@
   "scripts": {
     "start": "tsc -p tsconfig.json && node js-file/server.js",
     "start:dev": "tsc --watch | nodemon",
+    "start:front": "node ./index.js",
     "lint": "eslint --ext .js,.ts --fix ts-file/",
     "build": "tsc -p tsconfig.json",
     "fix-ts": "eslint --fix 'project-with-typescript/*.ts'"

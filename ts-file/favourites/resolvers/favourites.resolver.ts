@@ -11,29 +11,7 @@ export const resolverFavourite = {
           console.log(dataSources.favouritesAPI.context.token);
           const body = await dataSources.favouritesAPI.getAllFavourite();
           console.log(`resolver`, body);
-          const go = await {
-            id: body._id,
-            userId: body.userId,
-
-            bands: dataSources.bandsAPI.getAllBandsbyIds(
-              body.bandsIds,
-              dataSources
-            ),
-            tracks: dataSources.tracksAPI.getAllTracksbyIds(
-              body.tracksIds,
-              dataSources
-            ),
-            artists: dataSources.artistsAPI.getAllArtistsbyIds(
-              body.artistsIds,
-              dataSources
-            ),
-            genres: await dataSources.genresAPI.getAllGenresbyIds(
-              body.genresIds,
-              dataSources
-            ),
-          };
-          console.log('done', go);
-          return go;
+          return body;
         } else {
           throw new Error('AutorithationError');
         }
@@ -44,7 +22,26 @@ export const resolverFavourite = {
       }
     },
   },
-
+  Favourites: {
+    id(parent: Favorite, _args: any, { dataSources }: any, i: any) {
+      return parent._id;
+    },
+    userId(parent: Favorite, _args: any, { dataSources }: any, i: any) {
+      return parent.userId;
+    },
+    bands(parent: Favorite, _args: any, { dataSources }: any, i: any) {
+      return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
+    },
+    genres(parent: Favorite, _args: any, { dataSources }: any, i: any) {
+      return dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
+    },
+    artists(parent: Favorite, _args: any, { dataSources }: any, i: any) {
+      return dataSources.artistsAPI.getAllArtistsbyIds(parent.artistsIds);
+    },
+    tracks(parent: Favorite, _args: any, { dataSources }: any, i: any) {
+      return dataSources.tracksAPI.getAllTracksbyIds(parent.tracksIds);
+    },
+  },
   Mutation: {
     createFavourite: async (
       _source: any,
@@ -63,27 +60,7 @@ export const resolverFavourite = {
               id: typeId,
             });
           console.log(`resolver`, body);
-          return {
-            id: body._id,
-            userId: body.userId,
-
-            bands: dataSources.bandsAPI.getAllBandsbyIds(
-              body.bandsIds,
-              dataSources
-            ),
-            tracks: dataSources.tracksAPI.getAllTracksbyIds(
-              body.tracksIds,
-              dataSources
-            ),
-            artists: dataSources.artistsAPI.getAllArtistsbyIds(
-              body.artistsIds,
-              dataSources
-            ),
-            genres: await dataSources.genresAPI.getAllGenresbyIds(
-              body.genresIds,
-              dataSources
-            ),
-          };
+          return body;
         } else {
           throw new Error('AutorithationError');
         }

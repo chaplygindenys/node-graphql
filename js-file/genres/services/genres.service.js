@@ -32,14 +32,8 @@ export class GenresAPI extends RESTDataSource {
         }
     }
     async getGenre(id) {
-        const body = await this.get(`/${encodeURIComponent(id)}`);
-        return {
-            id: body._id,
-            name: body.name,
-            description: body.description,
-            country: body.country,
-            year: body.year,
-        };
+        const body = this.get(`/${encodeURIComponent(id)}`);
+        return body;
     }
     async postGenre({ name, description, country, year }) {
         const body = this.post('', {

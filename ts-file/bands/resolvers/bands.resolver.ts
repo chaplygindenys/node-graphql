@@ -1,5 +1,5 @@
 import { options } from '../../config.js';
-import { Band, BandId } from '../../interface';
+import { Band, BandId, Genre } from '../../interface';
 import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
 export const resolverBands = {
@@ -9,16 +9,9 @@ export const resolverBands = {
       console.log(dataSources);
 
       try {
-        const body: any = await dataSources.bandsAPI.getBand(id);
+        const body: BandId = await dataSources.bandsAPI.getBand(id);
         console.log(body);
-        return {
-          id: body.id,
-          name: body.name,
-          origin: body.origin,
-          members: body.members,
-          website: body.website,
-          genres: body.genres,
-        };
+        return body;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.error(err);
@@ -28,7 +21,8 @@ export const resolverBands = {
         }
       }
     },
-    bands: async (
+
+    allBands: async (
       _source: any,
       { limit, offset }: any,
       { dataSources }: any
@@ -40,26 +34,7 @@ export const resolverBands = {
           offset: offset || options.defaultOffset,
         });
         console.log(`resolver`, body);
-        const trueIdforBodyItems = (arr: Band[]) => {
-          let goodArr = [];
-          for (let index = 0; index < arr.length; index++) {
-            const body = arr[index];
-            goodArr.push({
-              id: body._id,
-              name: body.name,
-              origin: body.origin,
-              members: trueArrMembersFromBandRes(body),
-              website: body.website,
-              genres: dataSources.genresAPI.getAllGenresbyIds(
-                body.genresIds,
-                dataSources
-              ),
-            });
-          }
-          console.log(goodArr);
-          return goodArr;
-        };
-        return trueIdforBodyItems(body.items);
+        return body.items;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);
@@ -70,13 +45,33 @@ export const resolverBands = {
       }
     },
   },
-
+  Band: {
+    id(parent: Band, _args: any, { dataSources }: any, i: any) {
+      return parent._id;
+    },
+    name(parent: Band, _args: any, { dataSources }: any, i: any) {
+      return parent.name;
+    },
+    origin(parent: Band, _args: any, { dataSources }: any, i: any) {
+      return parent.origin;
+    },
+    members(parent: Band, _args: any, { dataSources }: any, i: any) {
+      return parent.members;
+    },
+    website(parent: Band, _args: any, { dataSources }: any, i: any) {
+      return parent.website;
+    },
+    genres(parent: Band, _args: any, { dataSources }: any, i: any) {
+      console.log(parent);
+      const res = dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
+      return res;
+    },
+  },
   Mutation: {
     createBand: async (
       _source: any,
       { name, origin, members, website, genresIds }: any,
-      { dataSources }: any,
-      context: any
+      { dataSources }: any
     ) => {
       console.log(name, origin, members, website, genresIds);
       console.log(dataSources.bandsAPI.context.token);
@@ -90,17 +85,7 @@ export const resolverBands = {
             genresIds,
           });
           console.log(`resolver`, body);
-          return {
-            id: body._id,
-            name: body.name,
-            origin: body.origin,
-            members: trueArrMembersFromBandRes(body),
-            website: body.website,
-            genres: await dataSources.genresAPI.getAllGenresbyIds(
-              body.genresIds,
-              dataSources
-            ),
-          };
+          return body;
         } else {
           throw new Error('AutorithationError');
         }
@@ -132,18 +117,7 @@ export const resolverBands = {
             genresIds,
           });
           console.log(`resolver`, body);
-
-          return {
-            id: body._id,
-            name: body.name,
-            origin: body.origin,
-            members: trueArrMembersFromBandRes(body),
-            website: body.website,
-            genres: await dataSources.genresAPI.getAllGenresbyIds(
-              body.genresIds,
-              dataSources
-            ),
-          };
+          return body;
         } else {
           throw new Error('AutorithationError');
         }

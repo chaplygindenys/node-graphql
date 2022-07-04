@@ -1,7 +1,7 @@
 import { options } from '../../config.js';
 export const resolverGenres = {
     Query: {
-        genres: async (_source, { offset, limit }, { dataSources }, context) => {
+        allGenres: async (_source, { offset, limit }, { dataSources }) => {
             console.log(dataSources);
             console.log(offset, limit);
             try {
@@ -10,22 +10,7 @@ export const resolverGenres = {
                     limit: limit || options.defaultOffset,
                 });
                 console.log(`resolver`, body);
-                const trueIdforBodyItems = (arr) => {
-                    let goodArr = [];
-                    for (let index = 0; index < arr.length; index++) {
-                        const body = arr[index];
-                        goodArr.push({
-                            id: body._id,
-                            name: body.name,
-                            description: body.description,
-                            country: body.country,
-                            year: body.year,
-                        });
-                    }
-                    console.log(goodArr);
-                    return goodArr;
-                };
-                return trueIdforBodyItems(body.items);
+                return body.items;
             }
             catch (err) {
                 if (err) {
@@ -42,15 +27,9 @@ export const resolverGenres = {
             console.log(id);
             console.log(dataSources);
             try {
-                const body = await dataSources.genresAPI.getGenre(id, dataSources);
+                const body = await dataSources.genresAPI.getGenre(id);
                 console.log('resolver: ', body);
-                return {
-                    id: body.id,
-                    name: body.name,
-                    description: body.description,
-                    country: body.country,
-                    year: body.year,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {
@@ -62,6 +41,23 @@ export const resolverGenres = {
                     };
                 }
             }
+        },
+    },
+    Genre: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
+        name(parent, _args, { dataSources }, i) {
+            return parent.name;
+        },
+        description(parent, _args, { dataSources }, i) {
+            return parent.description;
+        },
+        country(parent, _args, { dataSources }, i) {
+            return parent.country;
+        },
+        year(parent, _args, { dataSources }, i) {
+            return parent.year;
         },
     },
     Mutation: {
@@ -77,14 +73,8 @@ export const resolverGenres = {
                         country,
                         year,
                     });
-                    console.log(`resolver`, body.items);
-                    return {
-                        id: body._id,
-                        name: body.name,
-                        description: body.description,
-                        country: body.country,
-                        year: body.year,
-                    };
+                    console.log(`resolver`, body);
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
@@ -113,13 +103,7 @@ export const resolverGenres = {
                         year,
                     });
                     console.log(`resolver`, body.items);
-                    return {
-                        id: body._id,
-                        name: body.name,
-                        description: body.description,
-                        country: body.country,
-                        year: body.year,
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');

@@ -29,13 +29,7 @@ export const resolverUsers = {
       try {
         const body: User = await dataSources.usersAPI.getUser(id);
         console.log(`resolver`, body);
-        return {
-          id: body._id,
-          firstName: body.firstName,
-          lastName: body.lastName,
-          password: body.password,
-          email: body.email,
-        };
+        return body;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);
@@ -43,7 +37,23 @@ export const resolverUsers = {
       }
     },
   },
-
+  User: {
+    id(parent: User) {
+      return parent._id;
+    },
+    firstName(parent: User) {
+      return parent.firstName;
+    },
+    lastName(parent: User) {
+      return parent.lastName;
+    },
+    password(parent: User) {
+      return parent.password;
+    },
+    email(parent: User) {
+      return parent.email;
+    },
+  },
   Mutation: {
     register: async (
       _source: any,
@@ -60,13 +70,7 @@ export const resolverUsers = {
           email
         );
         console.log(`resolver`, body);
-        return {
-          id: body._id,
-          firstName: body.firstName,
-          lastName: body.lastName,
-          password: body.password,
-          email: body.email,
-        };
+        return body;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);

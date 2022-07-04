@@ -13,25 +13,16 @@ export class TracksAPI extends RESTDataSource {
         const body = this.get('', opt);
         return body;
     }
-    async getTrack(id, dataSources) {
-        const body = await this.get(`/${encodeURIComponent(id)}`);
-        return {
-            id: body._id,
-            title: body.title,
-            duration: body.duration,
-            released: body.released,
-            album: dataSources.albumsAPI.getAlbum(body.albumId),
-            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-            artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-        };
+    async getTrack(id) {
+        const body = this.get(`/${encodeURIComponent(id)}`);
+        return body;
     }
-    async getAllTracksbyIds(ids, dataSources) {
+    async getAllTracksbyIds(ids) {
         try {
             let tracks = [];
             for (let index = 0; index < ids.length; index++) {
                 const id = ids[index];
-                const track = await this.getTrack(id, dataSources);
+                const track = await this.getTrack(id);
                 console.log('track: ---->', track);
                 tracks.push(track);
             }

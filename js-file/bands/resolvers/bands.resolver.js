@@ -1,21 +1,13 @@
 import { options } from '../../config.js';
-import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 export const resolverBands = {
     Query: {
-        oneBand: async (_source, { id }, { dataSources }) => {
+        band: async (_source, { id }, { dataSources }) => {
             console.log(id);
             console.log(dataSources);
             try {
-                const body = await dataSources.bandsAPI.getBand(id, dataSources);
+                const body = await dataSources.bandsAPI.getBand(id);
                 console.log(body);
-                return {
-                    id: body.id,
-                    name: body.name,
-                    origin: body.origin,
-                    members: body.members,
-                    website: body.website,
-                    genres: body.genres,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {
@@ -34,23 +26,7 @@ export const resolverBands = {
                     offset: offset || options.defaultOffset,
                 });
                 console.log(`resolver`, body);
-                const trueIdforBodyItems = (arr) => {
-                    let goodArr = [];
-                    for (let index = 0; index < arr.length; index++) {
-                        const body = arr[index];
-                        goodArr.push({
-                            id: body._id,
-                            name: body.name,
-                            origin: body.origin,
-                            members: trueArrMembersFromBandRes(body),
-                            website: body.website,
-                            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                        });
-                    }
-                    console.log(goodArr);
-                    return goodArr;
-                };
-                return trueIdforBodyItems(body.items);
+                return body.items;
             }
             catch (err) {
                 if (err) {
@@ -62,8 +38,30 @@ export const resolverBands = {
             }
         },
     },
+    Band: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
+        name(parent, _args, { dataSources }, i) {
+            return parent.name;
+        },
+        origin(parent, _args, { dataSources }, i) {
+            return parent.origin;
+        },
+        members(parent, _args, { dataSources }, i) {
+            return parent.members;
+        },
+        website(parent, _args, { dataSources }, i) {
+            return parent.website;
+        },
+        genres(parent, _args, { dataSources }, i) {
+            console.log(parent);
+            const res = dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
+            return res;
+        },
+    },
     Mutation: {
-        createBand: async (_source, { name, origin, members, website, genresIds }, { dataSources }, context) => {
+        createBand: async (_source, { name, origin, members, website, genresIds }, { dataSources }) => {
             console.log(name, origin, members, website, genresIds);
             console.log(dataSources.bandsAPI.context.token);
             try {
@@ -76,14 +74,7 @@ export const resolverBands = {
                         genresIds,
                     });
                     console.log(`resolver`, body);
-                    return {
-                        id: body._id,
-                        name: body.name,
-                        origin: body.origin,
-                        members: trueArrMembersFromBandRes(body),
-                        website: body.website,
-                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
@@ -112,14 +103,7 @@ export const resolverBands = {
                         genresIds,
                     });
                     console.log(`resolver`, body);
-                    return {
-                        id: body._id,
-                        name: body.name,
-                        origin: body.origin,
-                        members: trueArrMembersFromBandRes(body),
-                        website: body.website,
-                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');

@@ -1,11 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import console from 'console';
 export class UsersAPI extends RESTDataSource {
     constructor() {
         super();
         this.baseURL = `http://localhost:3004/v1/users`;
     }
-    postUser(firstName, lastName, password, email) {
+    async postUser(firstName, lastName, password, email) {
         const newUser = this.post('/register', {
             firstName,
             lastName,
@@ -15,7 +14,7 @@ export class UsersAPI extends RESTDataSource {
         console.log(newUser);
         return newUser;
     }
-    loginUser(psw, ml) {
+    async loginUser(psw, ml) {
         console.log('sdssfsdfsdf', psw);
         console.log(ml);
         const JWT = this.post('/login', {

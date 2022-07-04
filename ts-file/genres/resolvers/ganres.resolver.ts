@@ -3,11 +3,10 @@ import { Genre, GenreId } from '../../interface.js';
 
 export const resolverGenres = {
   Query: {
-    genres: async (
+    allGenres: async (
       _source: any,
       { offset, limit }: any,
-      { dataSources }: any,
-      context: any
+      { dataSources }: any
     ) => {
       console.log(dataSources);
       console.log(offset, limit);
@@ -17,22 +16,8 @@ export const resolverGenres = {
           limit: limit || options.defaultOffset,
         });
         console.log(`resolver`, body);
-        const trueIdforBodyItems = (arr: Genre[]) => {
-          let goodArr = [];
-          for (let index = 0; index < arr.length; index++) {
-            const body = arr[index];
-            goodArr.push({
-              id: body._id,
-              name: body.name,
-              description: body.description,
-              country: body.country,
-              year: body.year,
-            });
-          }
-          console.log(goodArr);
-          return goodArr;
-        };
-        return trueIdforBodyItems(body.items);
+
+        return body.items;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);
@@ -49,18 +34,9 @@ export const resolverGenres = {
       console.log(dataSources);
 
       try {
-        const body: GenreId = await dataSources.genresAPI.getGenre(
-          id,
-          dataSources
-        );
+        const body: GenreId = await dataSources.genresAPI.getGenre(id);
         console.log('resolver: ', body);
-        return {
-          id: body.id,
-          name: body.name,
-          description: body.description,
-          country: body.country,
-          year: body.year,
-        };
+        return body;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.error(err);
@@ -71,6 +47,23 @@ export const resolverGenres = {
           };
         }
       }
+    },
+  },
+  Genre: {
+    id(parent: Genre, _args: any, { dataSources }: any, i: any) {
+      return parent._id;
+    },
+    name(parent: Genre, _args: any, { dataSources }: any, i: any) {
+      return parent.name;
+    },
+    description(parent: Genre, _args: any, { dataSources }: any, i: any) {
+      return parent.description;
+    },
+    country(parent: Genre, _args: any, { dataSources }: any, i: any) {
+      return parent.country;
+    },
+    year(parent: Genre, _args: any, { dataSources }: any, i: any) {
+      return parent.year;
     },
   },
   Mutation: {
@@ -91,14 +84,8 @@ export const resolverGenres = {
             country,
             year,
           });
-          console.log(`resolver`, body.items);
-          return {
-            id: body._id,
-            name: body.name,
-            description: body.description,
-            country: body.country,
-            year: body.year,
-          };
+          console.log(`resolver`, body);
+          return body;
         } else {
           throw new Error('AutorithationError');
         }
@@ -131,13 +118,7 @@ export const resolverGenres = {
             year,
           });
           console.log(`resolver`, body.items);
-          return {
-            id: body._id,
-            name: body.name,
-            description: body.description,
-            country: body.country,
-            year: body.year,
-          };
+          return body;
         } else {
           throw new Error('AutorithationError');
         }

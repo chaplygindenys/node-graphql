@@ -1,7 +1,4 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
-import { Context } from 'apollo-server-core';
-import console from 'console';
-import { ArgumentNode } from 'graphql';
 
 export class UsersAPI extends RESTDataSource {
   constructor() {
@@ -13,7 +10,7 @@ export class UsersAPI extends RESTDataSource {
   //   request.headers.set('Authorization', this.context.token);
   // }
 
-  postUser(
+  async postUser(
     firstName: string,
     lastName: string,
     password: string,
@@ -28,7 +25,7 @@ export class UsersAPI extends RESTDataSource {
     console.log(newUser);
     return newUser;
   }
-  loginUser(psw: string, ml: string) {
+  async loginUser(psw: string, ml: string) {
     console.log('sdssfsdfsdf', psw);
     console.log(ml);
     const JWT = this.post('/login', {

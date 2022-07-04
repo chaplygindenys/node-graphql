@@ -1,6 +1,5 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
-import { BandsAPI } from '../../bands/services/bands.service.js';
 
 import { Artist } from '../../interface';
 
@@ -21,12 +20,12 @@ export class ArtistsAPI extends RESTDataSource {
     return body;
   }
 
-  async getAllArtistsbyIds(ids: string[], dataSources: any) {
+  async getAllArtistsbyIds(ids: string[]) {
     try {
       let artists = [];
       for (let index = 0; index < ids.length; index++) {
         const id = ids[index];
-        const artist = await this.getArtist(id, dataSources);
+        const artist = await this.getArtist(id);
         console.log('artist: ---->', artist);
         artists.push(artist);
       }
@@ -39,22 +38,11 @@ export class ArtistsAPI extends RESTDataSource {
       }
     }
   }
-  async getArtist(id: string, dataSources: any) {
+  async getArtist(id: string) {
     const body: Artist = await this.get(`/${encodeURIComponent(id)}`);
     console.log('services: ', body);
-    return {
-      id: body._id,
-      firstName: body.firstName,
-      secondName: body.secondName,
-      middleName: body.middleName,
-      birthDate: body.birthDate,
-      birthPlace: body.birthPlace,
-      country: body.country,
-      bands: BandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-      instruments: body.instruments,
-    };
+    return body;
   }
-
   async postArtist(newArtist: Artist) {
     console.log('ttttttttttttttttt', newArtist);
     const body = this.post('', newArtist);

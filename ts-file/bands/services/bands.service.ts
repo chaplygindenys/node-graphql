@@ -20,28 +20,18 @@ export class BandsAPI extends RESTDataSource {
     return bands;
   }
 
-  async getBand(id: string, dataSources: any) {
-    const body: Band = await this.get(`/${encodeURIComponent(id)}`);
-    return {
-      id: body._id,
-      name: body.name,
-      origin: body.origin,
-      members: trueArrMembersFromBandRes(body),
-      website: body.website,
-      genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-    };
+  async getBand(id: string) {
+    return this.get(`/${encodeURIComponent(id)}`);
   }
 
-  async getAllBandsbyIds(ids: string[], dataSources: any) {
+  async getAllBandsbyIds(ids: string[]) {
     try {
       let bands = [];
       for (let index = 0; index < ids.length; index++) {
         const id = ids[index];
-        const band = await this.getBand(id, dataSources);
-        console.log('band: ---->', band);
+        const band = await this.getBand(id);
         bands.push(band);
       }
-      console.log('A', bands);
       return bands;
     } catch (error) {
       if (error) {

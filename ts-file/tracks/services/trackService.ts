@@ -1,5 +1,4 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
-import { DataSources } from 'apollo-server-core/dist/graphqlOptions';
 import console from 'console';
 import { Track } from '../../interface';
 
@@ -19,26 +18,17 @@ export class TracksAPI extends RESTDataSource {
     return body;
   }
 
-  async getTrack(id: string, dataSources: any) {
-    const body: Track = await this.get(`/${encodeURIComponent(id)}`);
-    return {
-      id: body._id,
-      title: body.title,
-      duration: body.duration,
-      released: body.released,
-      album: dataSources.albumsAPI.getAlbum(body.albumId),
-      bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds),
-      genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds),
-      artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-    };
+  async getTrack(id: string) {
+    const body = this.get(`/${encodeURIComponent(id)}`);
+    return body;
   }
 
-  async getAllTracksbyIds(ids: string[], dataSources: any) {
+  async getAllTracksbyIds(ids: string[]) {
     try {
       let tracks = [];
       for (let index = 0; index < ids.length; index++) {
         const id = ids[index];
-        const track = await this.getTrack(id, dataSources);
+        const track = await this.getTrack(id);
         console.log('track: ---->', track);
         tracks.push(track);
       }

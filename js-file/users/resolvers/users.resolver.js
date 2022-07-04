@@ -23,19 +23,30 @@ export const resolverUsers = {
             try {
                 const body = await dataSources.usersAPI.getUser(id);
                 console.log(`resolver`, body);
-                return {
-                    id: body._id,
-                    firstName: body.firstName,
-                    lastName: body.lastName,
-                    password: body.password,
-                    email: body.email,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {
                     console.log(err);
                 }
             }
+        },
+    },
+    User: {
+        id(parent) {
+            return parent._id;
+        },
+        firstName(parent) {
+            return parent.firstName;
+        },
+        lastName(parent) {
+            return parent.lastName;
+        },
+        password(parent) {
+            return parent.password;
+        },
+        email(parent) {
+            return parent.email;
         },
     },
     Mutation: {
@@ -45,13 +56,7 @@ export const resolverUsers = {
             try {
                 const body = await dataSources.usersAPI.postUser(firstName, lastName, password, email);
                 console.log(`resolver`, body);
-                return {
-                    id: body._id,
-                    firstName: body.firstName,
-                    lastName: body.lastName,
-                    password: body.password,
-                    email: body.email,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {

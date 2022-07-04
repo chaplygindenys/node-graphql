@@ -1,7 +1,7 @@
 import { options } from '../../config.js';
 export const resolverTracks = {
     Query: {
-        tracks: async (_source, { limit, offset }, { dataSources }) => {
+        allTracks: async (_source, { limit, offset }, { dataSources }) => {
             console.log(dataSources.tracksAPI, {
                 limit: limit || options.defaultLimit,
                 offset: offset || options.defaultOffset,
@@ -12,25 +12,7 @@ export const resolverTracks = {
                     offset: offset || options.defaultOffset,
                 });
                 console.log(`resolver`, body);
-                const trueIdforBodyItems = (arr) => {
-                    let goodArr = [];
-                    for (let index = 0; index < arr.length; index++) {
-                        const body = arr[index];
-                        goodArr.push({
-                            id: body._id,
-                            title: body.title,
-                            duration: body.duration,
-                            released: body.released,
-                            album: dataSources.albumsAPI.getAlbum(body.albumId, dataSources),
-                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                            artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                        });
-                    }
-                    console.log(goodArr);
-                    return goodArr;
-                };
-                return trueIdforBodyItems(body.items);
+                return body.items;
             }
             catch (err) {
                 if (err) {
@@ -42,18 +24,9 @@ export const resolverTracks = {
             console.log(id);
             console.log(dataSources.tracksAPI);
             try {
-                const body = await dataSources.tracksAPI.getTrack(id, dataSources);
+                const body = await dataSources.tracksAPI.getTrack(id);
                 console.log(body);
-                return {
-                    id: body.id,
-                    title: body.title,
-                    duration: body.duration,
-                    released: body.released,
-                    album: body.album,
-                    bands: body.bands,
-                    genres: body.genres,
-                    artists: body.artists,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {
@@ -63,6 +36,29 @@ export const resolverTracks = {
                     };
                 }
             }
+        },
+    },
+    Track: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
+        title(parent, _args, { dataSources }, i) {
+            return parent.title;
+        },
+        albums(parent, _args, { dataSources }, i) {
+            return dataSources.albumsAPI.getAlbum(parent.albumId);
+        },
+        bands(parent, _args, { dataSources }, i) {
+            return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
+        },
+        duration(parent, _args, { dataSources }, i) {
+            return parent.duration;
+        },
+        released(parent, _args, { dataSources }, i) {
+            return parent.released;
+        },
+        genres(parent, _args, { dataSources }, i) {
+            return dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
         },
     },
     Mutation: {
@@ -81,16 +77,7 @@ export const resolverTracks = {
                         genresIds,
                     });
                     console.log(`resolver`, body);
-                    return {
-                        id: body._id,
-                        title: body.title,
-                        duration: body.duration,
-                        released: body.released,
-                        album: dataSources.albumsAPI.getAlbum(body.albumId, dataSources),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
@@ -121,16 +108,7 @@ export const resolverTracks = {
                         genresIds: genresIds,
                     });
                     console.log(`resolver`, body);
-                    return {
-                        id: body._id,
-                        title: body.title,
-                        duration: body.duration,
-                        released: body.released,
-                        album: dataSources.albumsAPI.getAlbum(body.albumId, dataSources),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');

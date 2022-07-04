@@ -7,16 +7,7 @@ export const resolverFavourite = {
                     console.log(dataSources.favouritesAPI.context.token);
                     const body = await dataSources.favouritesAPI.getAllFavourite();
                     console.log(`resolver`, body);
-                    const go = await {
-                        id: body._id,
-                        userId: body.userId,
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.tracksIds, dataSources),
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                    };
-                    console.log('done', go);
-                    return go;
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
@@ -27,6 +18,26 @@ export const resolverFavourite = {
                     console.log(err);
                 }
             }
+        },
+    },
+    Favourites: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
+        userId(parent, _args, { dataSources }, i) {
+            return parent.userId;
+        },
+        bands(parent, _args, { dataSources }, i) {
+            return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
+        },
+        genres(parent, _args, { dataSources }, i) {
+            return dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
+        },
+        artists(parent, _args, { dataSources }, i) {
+            return dataSources.artistsAPI.getAllArtistsbyIds(parent.artistsIds);
+        },
+        tracks(parent, _args, { dataSources }, i) {
+            return dataSources.tracksAPI.getAllTracksbyIds(parent.tracksIds);
         },
     },
     Mutation: {
@@ -41,14 +52,7 @@ export const resolverFavourite = {
                         id: typeId,
                     });
                     console.log(`resolver`, body);
-                    return {
-                        id: body._id,
-                        userId: body.userId,
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.tracksIds, dataSources),
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                        genres: await dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');

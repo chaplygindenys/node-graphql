@@ -12,7 +12,7 @@ type Mess {
 
 type Query {
   genre(id: ID!): Genre
-  genres(limit: Int, offset: Int): [Genre]
+  allGenres(limit: Int, offset: Int): [Genre]
 }
 
 type Mutation {

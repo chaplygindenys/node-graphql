@@ -14,16 +14,14 @@ export class AlbumsAPI extends RESTDataSource {
         console.log('services: ', body);
         return body;
     }
-    async getAllAlbumsbyIds(ids, dataSources) {
+    async getAllAlbumsbyIds(ids) {
         try {
             let albums = [];
             for (let index = 0; index < ids.length; index++) {
                 const id = ids[index];
-                const album = await this.getAlbum(id, dataSources);
-                console.log('album: ---->', album);
+                const album = await this.getAlbum(id);
                 albums.push(album);
             }
-            console.log('A', albums);
             return albums;
         }
         catch (error) {
@@ -33,24 +31,15 @@ export class AlbumsAPI extends RESTDataSource {
             }
         }
     }
-    async getAlbum(id, dataSources) {
+    async getAlbum(id) {
         console.log('getalbums', id);
         try {
             if (id === 'idsad') {
                 throw new Error('idsad');
             }
-            const body = await this.get(`/${encodeURIComponent(id)}`);
+            const body = this.get(`/${encodeURIComponent(id)}`);
             console.log('services: ', body);
-            return {
-                id: body._id,
-                name: body.name,
-                released: body.released,
-                artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
-                genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                image: body.image,
-            };
+            return body;
         }
         catch (error) {
             if (error) {

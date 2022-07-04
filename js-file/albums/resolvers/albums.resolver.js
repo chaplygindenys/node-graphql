@@ -1,7 +1,7 @@
 import { options } from '../../config.js';
 export const resolverAlbum = {
     Query: {
-        albums: async (_source, { offset, limit }, { dataSources }) => {
+        allAlbums: async (_source, { offset, limit }, { dataSources }) => {
             console.log(dataSources.albumsAPI);
             console.log(offset, limit);
             try {
@@ -10,25 +10,7 @@ export const resolverAlbum = {
                     limit: limit || options.defaultOffset,
                 });
                 console.log(`resolver`, body);
-                const trueIdforBodyItems = (arr) => {
-                    let goodArr = [];
-                    for (let index = 0; index < arr.length; index++) {
-                        const body = arr[index];
-                        goodArr.push({
-                            id: body._id,
-                            name: body.name,
-                            released: body.released,
-                            artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds),
-                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                            tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
-                            genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                            image: body.image,
-                        });
-                    }
-                    console.log(goodArr);
-                    return goodArr;
-                };
-                return trueIdforBodyItems(body.items);
+                return body.items;
             }
             catch (err) {
                 if (err) {
@@ -40,24 +22,38 @@ export const resolverAlbum = {
             console.log('in resolver albums ', id);
             console.log(dataSources);
             try {
-                const body = await dataSources.albumsAPI.getAlbum(id, dataSources);
+                const body = await dataSources.albumsAPI.getAlbum(id);
                 console.log('resolver: ', body);
-                return {
-                    id: body.id,
-                    name: body.name,
-                    released: body.released,
-                    artists: body.artists,
-                    bands: body.bands,
-                    tracks: body.tracks,
-                    genres: body.genres,
-                    image: body.image,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {
                     console.error(err);
                 }
             }
+        },
+    },
+    Album: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
+        name(parent, _args, { dataSources }, i) {
+            return parent.name;
+        },
+        released(parent, _args, { dataSources }, i) {
+            return parent.released;
+        },
+        artists(parent, _args, { dataSources }, i) {
+            return dataSources.artistsAPI.getAllArtistsbyIds(parent.artistsIds);
+        },
+        bands(parent, _args, { dataSources }, i) {
+            return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
+        },
+        tracks(parent, _args, { dataSources }, i) {
+            return dataSources.tracksAPI.getAllTracksbyIds(parent.trackIds);
+        },
+        genres(parent, _args, { dataSources }, i) {
+            return dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
         },
     },
     Mutation: {
@@ -76,15 +72,7 @@ export const resolverAlbum = {
                         genresIds,
                     });
                     console.log(`resolver`, body.items);
-                    return {
-                        id: body._id,
-                        name: body.name,
-                        released: body.released,
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
@@ -118,15 +106,7 @@ export const resolverAlbum = {
                         genresIds,
                     });
                     console.log(`resolver`, body.items);
-                    return {
-                        id: body._id,
-                        name: body.name,
-                        released: body.released,
-                        artists: dataSources.artistsAPI.getAllArtistsbyIds(body.artistsIds, dataSources),
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        tracks: dataSources.tracksAPI.getAllTracksbyIds(body.trackIds, dataSources),
-                        genres: dataSources.genresAPI.getAllGenresbyIds(body.genresIds, dataSources),
-                    };
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');

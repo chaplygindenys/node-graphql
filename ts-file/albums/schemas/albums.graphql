@@ -9,7 +9,7 @@ type Album {
 }
 
 type Query {
-  albums(limit: Int, offset: Int): [Album]
+  allAlbums(limit: Int, offset: Int): [Album]
   album(id: ID!): Album
 }
 

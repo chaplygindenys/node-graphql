@@ -3,11 +3,10 @@ import { Artist, ArtistId } from '../../interface.js';
 
 export const resolverArtist = {
   Query: {
-    artists: async (
+    allArtists: async (
       _source: any,
       { offset, limit }: any,
-      { dataSources }: any,
-      context: any
+      { dataSources }: any
     ) => {
       console.log(dataSources.artistsAPI);
       console.log(offset, limit);
@@ -17,29 +16,7 @@ export const resolverArtist = {
           limit: limit || options.defaultOffset,
         });
         console.log(`resolver`, body);
-        const trueIdforBodyItems = (arr: Artist[]) => {
-          let goodArr = [];
-          for (let index = 0; index < arr.length; index++) {
-            const body = arr[index];
-            goodArr.push({
-              id: body._id,
-              firstName: body.firstName,
-              secondName: body.secondName,
-              middleName: body.middleName,
-              birthDate: body.birthDate,
-              birthPlace: body.birthPlace,
-              country: body.country,
-              bands: dataSources.bandsAPI.getAllBandsbyIds(
-                body.bandsIds,
-                dataSources
-              ),
-              instruments: body.instruments,
-            });
-          }
-          console.log(goodArr);
-          return goodArr;
-        };
-        return trueIdforBodyItems(body.items);
+        return body.items;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.log(err);
@@ -51,27 +28,43 @@ export const resolverArtist = {
       console.log(dataSources.artistsAPI);
 
       try {
-        const body: any = await dataSources.artistsAPI.getArtist(
-          id,
-          dataSources
-        );
+        const body: ArtistId = await dataSources.artistsAPI.getArtist(id);
         console.log('resolver: ', body);
-        return {
-          id: body.id,
-          firstName: body.firstName,
-          secondName: body.secondName,
-          middleName: body.middleName,
-          birthDate: body.birthDate,
-          birthPlace: body.birthPlace,
-          country: body.country,
-          bands: body.bands,
-          instruments: body.instruments,
-        };
+        return body;
       } catch (err: Error | undefined | any) {
         if (err) {
           console.error(err);
         }
       }
+    },
+  },
+  Artist: {
+    id(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent._id;
+    },
+    firstName(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.firstName;
+    },
+    secondName(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.secondName;
+    },
+    middleName(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.middleName;
+    },
+    birthDate(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.birthDate;
+    },
+    birthPlace(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.birthDate;
+    },
+    country(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.birthDate;
+    },
+    bands(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
+    },
+    instruments(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent.instruments;
     },
   },
   Mutation: {
@@ -115,21 +108,8 @@ export const resolverArtist = {
             bandsIds,
             instruments,
           });
-          console.log(`resolver`, body.items);
-          return {
-            id: body._id,
-            firstName: body.firstName,
-            secondName: body.secondName,
-            middleName: body.middleName,
-            birthDate: body.birthDate,
-            birthPlace: body.birthPlace,
-            country: body.country,
-            bands: dataSources.bandsAPI.getAllBandsbyIds(
-              body.bandsIds,
-              dataSources
-            ),
-            instruments: body.instruments,
-          };
+          console.log(`resolver`, body);
+          return body;
         } else {
           throw new Error('AutorithationError');
         }
@@ -152,8 +132,7 @@ export const resolverArtist = {
         bandsIds,
         instruments,
       }: any,
-      { dataSources }: any,
-      context: any
+      { dataSources }: any
     ) => {
       console.log(id, {
         firstName,
@@ -180,21 +159,8 @@ export const resolverArtist = {
             bandsIds,
             instruments,
           });
-          console.log(`resolver`, body.items);
-          return {
-            id: body._id,
-            firstName: body.firstName,
-            secondName: body.secondName,
-            middleName: body.middleName,
-            birthDate: body.birthDate,
-            birthPlace: body.birthPlace,
-            country: body.country,
-            bands: dataSources.bandsAPI.getAllBandsbyIds(
-              body.bandsIds,
-              dataSources
-            ),
-            instruments: body.instruments,
-          };
+          console.log(`resolver`, body);
+          return body;
         } else {
           throw new Error('AutorithationError');
         }

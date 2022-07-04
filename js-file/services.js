@@ -30,6 +30,13 @@ let Q = {
     ...resolverTracks.Query,
     ...resolverUsers.Query,
 };
+let Band = { ...resolverBands.Band };
+let User = { ...resolverUsers.User };
+let Track = { ...resolverTracks.Track };
+let Genre = { ...resolverGenres.Genre };
+let Favourites = { ...resolverFavourite.Favourites };
+let Artist = { ...resolverArtist.Artist };
+let Album = { ...resolverAlbum.Album };
 let M = {
     ...resolverAlbum.Mutation,
     ...resolverArtist.Mutation,
@@ -39,4 +46,14 @@ let M = {
     ...resolverTracks.Mutation,
     ...resolverUsers.Mutation,
 };
-export const resolvers = { Query: Q, Mutation: M };
+export const resolvers = {
+    Query: Q,
+    Band,
+    User,
+    Track,
+    Genre,
+    Favourites,
+    Artist,
+    Album,
+    Mutation: M,
+};

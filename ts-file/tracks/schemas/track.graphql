@@ -1,7 +1,7 @@
 type Track {
   id: ID!
   title: String!
-  album: Album
+  albums: Album
   bands: [Band]
   artists: [Artist]
   duration: Int!
@@ -10,7 +10,7 @@ type Track {
 }
 
 type Query {
-  tracks(limit: Int, offset: Int): [Track]
+  allTracks(limit: Int, offset: Int): [Track]
   track(id: ID!): Track
 }
 

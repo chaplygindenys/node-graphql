@@ -1,7 +1,7 @@
 import { options } from '../../config.js';
 export const resolverArtist = {
     Query: {
-        artists: async (_source, { offset, limit }, { dataSources }, context) => {
+        allArtists: async (_source, { offset, limit }, { dataSources }) => {
             console.log(dataSources.artistsAPI);
             console.log(offset, limit);
             try {
@@ -10,26 +10,7 @@ export const resolverArtist = {
                     limit: limit || options.defaultOffset,
                 });
                 console.log(`resolver`, body);
-                const trueIdforBodyItems = (arr) => {
-                    let goodArr = [];
-                    for (let index = 0; index < arr.length; index++) {
-                        const body = arr[index];
-                        goodArr.push({
-                            id: body._id,
-                            firstName: body.firstName,
-                            secondName: body.secondName,
-                            middleName: body.middleName,
-                            birthDate: body.birthDate,
-                            birthPlace: body.birthPlace,
-                            country: body.country,
-                            bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                            instruments: body.instruments,
-                        });
-                    }
-                    console.log(goodArr);
-                    return goodArr;
-                };
-                return trueIdforBodyItems(body.items);
+                return body.items;
             }
             catch (err) {
                 if (err) {
@@ -41,25 +22,44 @@ export const resolverArtist = {
             console.log(id);
             console.log(dataSources.artistsAPI);
             try {
-                const body = await dataSources.artistsAPI.getArtist(id, dataSources);
+                const body = await dataSources.artistsAPI.getArtist(id);
                 console.log('resolver: ', body);
-                return {
-                    id: body.id,
-                    firstName: body.firstName,
-                    secondName: body.secondName,
-                    middleName: body.middleName,
-                    birthDate: body.birthDate,
-                    birthPlace: body.birthPlace,
-                    country: body.country,
-                    bands: body.bands,
-                    instruments: body.instruments,
-                };
+                return body;
             }
             catch (err) {
                 if (err) {
                     console.error(err);
                 }
             }
+        },
+    },
+    Artist: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
+        firstName(parent, _args, { dataSources }, i) {
+            return parent.firstName;
+        },
+        secondName(parent, _args, { dataSources }, i) {
+            return parent.secondName;
+        },
+        middleName(parent, _args, { dataSources }, i) {
+            return parent.middleName;
+        },
+        birthDate(parent, _args, { dataSources }, i) {
+            return parent.birthDate;
+        },
+        birthPlace(parent, _args, { dataSources }, i) {
+            return parent.birthDate;
+        },
+        country(parent, _args, { dataSources }, i) {
+            return parent.birthDate;
+        },
+        bands(parent, _args, { dataSources }, i) {
+            return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
+        },
+        instruments(parent, _args, { dataSources }, i) {
+            return parent.instruments;
         },
     },
     Mutation: {
@@ -79,18 +79,8 @@ export const resolverArtist = {
                         bandsIds,
                         instruments,
                     });
-                    console.log(`resolver`, body.items);
-                    return {
-                        id: body._id,
-                        firstName: body.firstName,
-                        secondName: body.secondName,
-                        middleName: body.middleName,
-                        birthDate: body.birthDate,
-                        birthPlace: body.birthPlace,
-                        country: body.country,
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        instruments: body.instruments,
-                    };
+                    console.log(`resolver`, body);
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
@@ -102,7 +92,7 @@ export const resolverArtist = {
                 }
             }
         },
-        updateArtist: async (_source, { id, firstName, secondName, middleName, birthDate, birthPlace, country, bandsIds, instruments, }, { dataSources }, context) => {
+        updateArtist: async (_source, { id, firstName, secondName, middleName, birthDate, birthPlace, country, bandsIds, instruments, }, { dataSources }) => {
             console.log(id, {
                 firstName,
                 secondName,
@@ -127,18 +117,8 @@ export const resolverArtist = {
                         bandsIds,
                         instruments,
                     });
-                    console.log(`resolver`, body.items);
-                    return {
-                        id: body._id,
-                        firstName: body.firstName,
-                        secondName: body.secondName,
-                        middleName: body.middleName,
-                        birthDate: body.birthDate,
-                        birthPlace: body.birthPlace,
-                        country: body.country,
-                        bands: dataSources.bandsAPI.getAllBandsbyIds(body.bandsIds, dataSources),
-                        instruments: body.instruments,
-                    };
+                    console.log(`resolver`, body);
+                    return body;
                 }
                 else {
                     throw new Error('AutorithationError');
