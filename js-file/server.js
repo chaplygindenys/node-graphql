@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server';
-import console from 'console';
+import 'dotenv/config';
 import { resolvers, typeDefs } from './services.js';
 import { ArtistsAPI } from './artists/services/artists.service.js';
 import { BandsAPI } from './bands/services/bands.service.js';
@@ -9,9 +9,11 @@ import { TracksAPI } from './tracks/services/trackService.js';
 import { UsersAPI } from './users/services/users.services.js';
 import { AlbumsAPI } from './albums/services/albums.service.js';
 import moment from 'moment';
+const PORT = process.env.PORT || 4000;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    csrfPrevention: true,
     dataSources: () => {
         return {
             usersAPI: new UsersAPI() || 'usersAPI',
@@ -28,7 +30,7 @@ const server = new ApolloServer({
     },
 });
 server
-    .listen()
+    .listen({ port: PORT })
     .then(({ url }) => {
     console.log(`🚀 ${console.log(moment(Date.now()))} Server ready at ${url}`);
 })

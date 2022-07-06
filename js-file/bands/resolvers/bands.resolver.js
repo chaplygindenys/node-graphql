@@ -38,6 +38,17 @@ export const resolverBands = {
             }
         },
     },
+    Member: {
+        artist(parent, _args, { dataSources }, i) {
+            return dataSources.artistsAPI.getAllArtistsbyIds(parent.artist);
+        },
+        instrument(parent, _args, { dataSources }, i) {
+            return parent.instrument;
+        },
+        years(parent, _args, { dataSources }, i) {
+            return parent.year;
+        },
+    },
     Band: {
         id(parent, _args, { dataSources }, i) {
             return parent._id;

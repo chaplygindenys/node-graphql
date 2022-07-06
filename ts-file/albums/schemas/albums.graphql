@@ -6,6 +6,7 @@ type Album {
   bands: [Band]
   tracks: [Track]
   genres: [Genre]
+  image: String
 }
 
 type Query {
@@ -21,6 +22,7 @@ type Mutation {
     bandsIds: [ID]!
     trackIds: [ID]!
     genresIds: [ID]!
+    image: String
   ): Album!
   "---------------"
   updateAlbum(
@@ -31,7 +33,9 @@ type Mutation {
     bandsIds: [ID]
     trackIds: [ID]
     genresIds: [ID]
+    image: String
   ): Album!
   "---------------------"
   deleteAlbum(id: ID!): Delete
+  uploadImage(albumid: ID!, file: String!): Album!
 }

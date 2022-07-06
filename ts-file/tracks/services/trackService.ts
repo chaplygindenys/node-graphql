@@ -10,7 +10,7 @@ export class TracksAPI extends RESTDataSource {
   }
   willSendRequest(request: RequestOptions) {
     console.log(this.context.token);
-    request.headers.set('Authorization', `Bearer ${this.context.token}`);
+    request.headers.set('Authorization', `${this.context.token}`);
   }
 
   async getAllTrack(opt: any) {

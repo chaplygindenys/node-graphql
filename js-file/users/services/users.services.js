@@ -4,6 +4,9 @@ export class UsersAPI extends RESTDataSource {
         super();
         this.baseURL = `http://localhost:3004/v1/users`;
     }
+    willSendRequest(request) {
+        request.headers.set('Authorization', `${this.context.token}`);
+    }
     async postUser(firstName, lastName, password, email) {
         const newUser = this.post('/register', {
             firstName,

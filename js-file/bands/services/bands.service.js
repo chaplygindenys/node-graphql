@@ -7,7 +7,7 @@ export class BandsAPI extends RESTDataSource {
     }
     willSendRequest(request) {
         console.log(this.context.token);
-        request.headers.set('Authorization', `Bearer ${this.context.token}`);
+        request.headers.set('Authorization', `${this.context.token}`);
     }
     async getAllBand(opt) {
         const bands = this.get('', opt);

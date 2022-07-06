@@ -8,15 +8,13 @@ type Band {
 }
 
 type Member {
-  id: ID
-  artist: String
+  artist: Artist
   instrument: String
-  year: String
+  years: String
 }
 
 input MemberInput {
-  id: ID!
-  artist: String
+  artist: ID!
   instrument: String
   years: String
 }

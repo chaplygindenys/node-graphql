@@ -60,9 +60,35 @@ export const resolverAlbum = {
     genres(parent: Album, _args: any, { dataSources }: any, i: any) {
       return dataSources.genresAPI.getAllGenresbyIds(parent.genresIds);
     },
+    image(parent: Album, _args: any, { dataSources }: any, i: any) {
+      return parent.image;
+    },
   },
 
   Mutation: {
+    uploadImage: async (
+      _source: any,
+      { albumid, file }: any,
+      { dataSources }: any
+    ) => {
+      console.log(albumid, file);
+      console.log(dataSources.albumsAPI.context.token);
+      try {
+        if (dataSources.albumsAPI.context.token) {
+          console.log(dataSources.albumsAPI.context.token);
+          const body = await dataSources.albumsAPI.putImage(albumid, file);
+          console.log(body);
+          return body;
+        } else {
+          throw new Error('AutorithationError');
+        }
+      } catch (err: Error | undefined | any) {
+        if (err) {
+          console.log(err);
+        }
+      }
+    },
+
     createAlbum: async (
       _source: any,
       { name, released, artistsIds, bandsIds, trackIds, genresIds }: Album,

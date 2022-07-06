@@ -1,5 +1,5 @@
 import { options } from '../../config.js';
-import { Band, BandId, Genre } from '../../interface';
+import { Band, BandId, Genre, Member } from '../../interface';
 import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
 export const resolverBands = {
@@ -43,6 +43,17 @@ export const resolverBands = {
           };
         }
       }
+    },
+  },
+  Member: {
+    artist(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return dataSources.artistsAPI.getAllArtistsbyIds(parent.artist);
+    },
+    instrument(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return parent.instrument;
+    },
+    years(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return parent.year;
     },
   },
   Band: {

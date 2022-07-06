@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises';
 import { gql } from 'apollo-server-core';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { loadSchema } from '@graphql-tools/load';
+import { loadDocuments, loadSchema } from '@graphql-tools/load';
 
 import { resolverUsers } from './users/resolvers/users.resolver.js';
 import { resolverTracks } from './tracks/resolvers/tracks.resolver.js';
@@ -10,11 +10,15 @@ import { resolverFavourite } from './favourites/resolvers/favourites.resolver.js
 import { resolverBands } from './bands/resolvers/bands.resolver.js';
 import { resolverArtist } from './artists/resolvers/artists.resolver.js';
 import { resolverAlbum } from './albums/resolvers/albums.resolver.js';
+import { CodeFileLoader } from '@graphql-tools/code-file-loader';
+import { printSchema } from 'graphql';
 
 export const typeDefs = await loadSchema('./ts-file/**/*.graphql', {
   // load files and merge them into a single schema object
   loaders: [new GraphQLFileLoader()],
 });
+
+// console.log(printSchema(typeDefs));
 
 export const addTrueId = (obj: { _id: string }) => {
   if (obj._id === undefined || obj._id === 'idsad') {

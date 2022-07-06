@@ -6,7 +6,7 @@ export class GenresAPI extends RESTDataSource {
         this.baseURL = `http://localhost:3001/v1/genres`;
     }
     async willSendRequest(request) {
-        request.headers.set('Authorization', `Bearer ${this.context.token}`);
+        request.headers.set('Authorization', `${this.context.token}`);
     }
     async getAllGenre(opt) {
         const body = this.get('', opt);

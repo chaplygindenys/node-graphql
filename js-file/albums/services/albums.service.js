@@ -7,7 +7,7 @@ export class AlbumsAPI extends RESTDataSource {
     }
     async willSendRequest(request) {
         console.log(this.context.token);
-        request.headers.set('Authorization', `Bearer ${this.context.token}`);
+        request.headers.set('Authorization', `${this.context.token}`);
     }
     getAllAlbum(opt) {
         const body = this.get('', opt);
@@ -49,13 +49,19 @@ export class AlbumsAPI extends RESTDataSource {
         }
     }
     async postAlbum(newAlbum) {
-        console.log('ttttttttttttttttt', newAlbum);
+        console.log('postAlbum', newAlbum);
         const body = this.post('', newAlbum);
-        console.log('services: ', body);
+        console.log('servicespostAlbum body: ', body);
         return body;
     }
     putAlbum(id, upAlbum) {
         const body = this.put(`/${encodeURIComponent(id)}`, upAlbum);
+        console.log('services: ', body);
+        return body;
+    }
+    putImage(albumid, file) {
+        console.log(file);
+        const body = this.put(`/${encodeURIComponent(albumid)}/image`, { file: file });
         console.log('services: ', body);
         return body;
     }
