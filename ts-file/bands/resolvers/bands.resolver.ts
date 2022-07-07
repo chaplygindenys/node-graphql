@@ -98,11 +98,11 @@ export const resolverBands = {
             membersWithArtistsFilds.push(
               await getMember(member, member.artist)
             );
+            return membersWithArtistsFilds;
           } else {
-            membersWithArtistsFilds.push(member);
+            return null;
           }
         }
-        return membersWithArtistsFilds;
       };
       const members = await getMembers(parent, dataSources);
       return members;
