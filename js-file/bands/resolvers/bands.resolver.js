@@ -39,14 +39,23 @@ export const resolverBands = {
         },
     },
     Member: {
-        artist(parent, _args, { dataSources }, i) {
-            return dataSources.artistsAPI.getAllArtistsbyIds(parent.artist);
+        id(parent, _args, { dataSources }, i) {
+            return parent.id;
+        },
+        firstName(parent, _args, { dataSources }, i) {
+            return parent.firstName;
+        },
+        secondName(parent, _args, { dataSources }, i) {
+            return parent.secondName;
+        },
+        middleName(parent, _args, { dataSources }, i) {
+            return parent.middleName;
         },
         instrument(parent, _args, { dataSources }, i) {
             return parent.instrument;
         },
         years(parent, _args, { dataSources }, i) {
-            return parent.year;
+            return parent.years;
         },
     },
     Band: {
@@ -59,8 +68,35 @@ export const resolverBands = {
         origin(parent, _args, { dataSources }, i) {
             return parent.origin;
         },
-        members(parent, _args, { dataSources }, i) {
-            return parent.members;
+        async members(parent, _args, { dataSources }, i) {
+            const getMembers = async (parent, dataSources) => {
+                let membersWithArtistsFilds = [];
+                for (let i = 0; i < parent.members.length; i++) {
+                    const member = parent.members[i];
+                    console.log(parent.members[i]);
+                    if (member.artist) {
+                        const getMember = async (member, id) => {
+                            const artist = await dataSources.artistsAPI.getArtist(id);
+                            console.log('get Member', artist, member.artist);
+                            return {
+                                id: id,
+                                years: member.years,
+                                instrument: member.instrument,
+                                middleName: artist.middleName,
+                                firstName: artist.firstName,
+                                secondName: artist.secondName,
+                            };
+                        };
+                        membersWithArtistsFilds.push(await getMember(member, member.artist));
+                    }
+                    else {
+                        membersWithArtistsFilds.push(member);
+                    }
+                }
+                return membersWithArtistsFilds;
+            };
+            const members = await getMembers(parent, dataSources);
+            return members;
         },
         website(parent, _args, { dataSources }, i) {
             return parent.website;

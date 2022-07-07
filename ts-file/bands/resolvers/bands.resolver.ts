@@ -1,6 +1,5 @@
 import { options } from '../../config.js';
-import { Band, BandId, Genre, Member } from '../../interface';
-import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
+import { Artist, Band, BandId, Genre, Member } from '../../interface';
 
 export const resolverBands = {
   Query: {
@@ -46,14 +45,23 @@ export const resolverBands = {
     },
   },
   Member: {
-    artist(parent: Member, _args: any, { dataSources }: any, i: any) {
-      return dataSources.artistsAPI.getAllArtistsbyIds(parent.artist);
+    id(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return parent.id;
+    },
+    firstName(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return parent.firstName;
+    },
+    secondName(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return parent.secondName;
+    },
+    middleName(parent: Member, _args: any, { dataSources }: any, i: any) {
+      return parent.middleName;
     },
     instrument(parent: Member, _args: any, { dataSources }: any, i: any) {
       return parent.instrument;
     },
     years(parent: Member, _args: any, { dataSources }: any, i: any) {
-      return parent.year;
+      return parent.years;
     },
   },
   Band: {
@@ -66,8 +74,38 @@ export const resolverBands = {
     origin(parent: Band, _args: any, { dataSources }: any, i: any) {
       return parent.origin;
     },
-    members(parent: Band, _args: any, { dataSources }: any, i: any) {
-      return parent.members;
+    async members(parent: Band, _args: any, { dataSources }: any, i: any) {
+      const getMembers = async (parent: Band, dataSources: any) => {
+        let membersWithArtistsFilds = [];
+        for (let i = 0; i < parent.members.length; i++) {
+          const member: Member = parent.members[i];
+          console.log(parent.members[i]);
+          if (member.artist) {
+            const getMember = async (member: Member, id: string) => {
+              const artist: Artist = await dataSources.artistsAPI.getArtist(id);
+              console.log('get Member', artist, member.artist);
+
+              return {
+                id: id,
+                years: member.years,
+                instrument: member.instrument,
+                middleName: artist.middleName,
+                firstName: artist.firstName,
+                secondName: artist.secondName,
+              };
+            };
+
+            membersWithArtistsFilds.push(
+              await getMember(member, member.artist)
+            );
+          } else {
+            membersWithArtistsFilds.push(member);
+          }
+        }
+        return membersWithArtistsFilds;
+      };
+      const members = await getMembers(parent, dataSources);
+      return members;
     },
     website(parent: Band, _args: any, { dataSources }: any, i: any) {
       return parent.website;

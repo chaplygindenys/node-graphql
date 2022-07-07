@@ -1,7 +1,5 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import console from 'console';
-import { Band } from '../../interface';
-import { trueArrMembersFromBandRes } from '../utils/bands.util.js';
 
 export class BandsAPI extends RESTDataSource {
   constructor() {
@@ -21,7 +19,11 @@ export class BandsAPI extends RESTDataSource {
   }
 
   async getBand(id: string) {
-    return this.get(`/${encodeURIComponent(id)}`);
+    try {
+      return this.get(`/${encodeURIComponent(id)}`);
+    } catch (error) {
+      return null;
+    }
   }
 
   async getAllBandsbyIds(ids: string[]) {

@@ -34,9 +34,13 @@ export class ArtistsAPI extends RESTDataSource {
         }
     }
     async getArtist(id) {
-        const body = await this.get(`/${encodeURIComponent(id)}`);
-        console.log('services: ', body);
-        return body;
+        try {
+            console.log(id);
+            return this.get(`/${encodeURIComponent(id)}`);
+        }
+        catch (error) {
+            return null;
+        }
     }
     async postArtist(newArtist) {
         console.log('ttttttttttttttttt', newArtist);

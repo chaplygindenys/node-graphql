@@ -28,8 +28,11 @@ export interface Band {
 export interface Member {
   id: string;
   artist: string;
+  firstName: String;
+  secondName: String;
+  middleName: String;
   instrument: string;
-  year: String;
+  years: String[];
 }
 
 export interface Genre {
