@@ -9,7 +9,7 @@ export class FavouritesAPI extends RESTDataSource {
     super();
     this.baseURL = `http://localhost:3007/v1/favourites`;
   }
-  async willSendRequest(request: RequestOptions) {
+  willSendRequest(request: RequestOptions) {
     console.log(this.context.token);
     request.headers.set('Authorization', `${this.context.token}`);
   }

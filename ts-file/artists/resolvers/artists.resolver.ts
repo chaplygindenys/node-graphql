@@ -38,7 +38,10 @@ export const resolverArtist = {
       }
     },
   },
-  BaseArtist: {
+  Artist: {
+    id(parent: Artist, _args: any, { dataSources }: any, i: any) {
+      return parent._id;
+    },
     firstName(parent: Artist, _args: any, { dataSources }: any, i: any) {
       return parent.firstName;
     },
@@ -57,29 +60,6 @@ export const resolverArtist = {
     country(parent: Artist, _args: any, { dataSources }: any, i: any) {
       return parent.birthDate;
     },
-  },
-  Artist: {
-    id(parent: Artist, _args: any, { dataSources }: any, i: any) {
-      return parent._id;
-    },
-    // firstName(parent: Artist, _args: any, { dataSources }: any, i: any) {
-    //   return parent.firstName;
-    // },
-    // secondName(parent: Artist, _args: any, { dataSources }: any, i: any) {
-    //   return parent.secondName;
-    // },
-    // middleName(parent: Artist, _args: any, { dataSources }: any, i: any) {
-    //   return parent.middleName;
-    // },
-    // birthDate(parent: Artist, _args: any, { dataSources }: any, i: any) {
-    //   return parent.birthDate;
-    // },
-    // birthPlace(parent: Artist, _args: any, { dataSources }: any, i: any) {
-    //   return parent.birthDate;
-    // },
-    // country(parent: Artist, _args: any, { dataSources }: any, i: any) {
-    //   return parent.birthDate;
-    // },
     bands(parent: Artist, _args: any, { dataSources }: any, i: any) {
       return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);
     },

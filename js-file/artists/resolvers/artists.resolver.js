@@ -33,7 +33,10 @@ export const resolverArtist = {
             }
         },
     },
-    BaseArtist: {
+    Artist: {
+        id(parent, _args, { dataSources }, i) {
+            return parent._id;
+        },
         firstName(parent, _args, { dataSources }, i) {
             return parent.firstName;
         },
@@ -51,11 +54,6 @@ export const resolverArtist = {
         },
         country(parent, _args, { dataSources }, i) {
             return parent.birthDate;
-        },
-    },
-    Artist: {
-        id(parent, _args, { dataSources }, i) {
-            return parent._id;
         },
         bands(parent, _args, { dataSources }, i) {
             return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);

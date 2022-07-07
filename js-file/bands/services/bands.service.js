@@ -15,12 +15,7 @@ export class BandsAPI extends RESTDataSource {
         return bands;
     }
     async getBand(id) {
-        try {
-            return this.get(`/${encodeURIComponent(id)}`);
-        }
-        catch (error) {
-            return null;
-        }
+        return this.get(`/${encodeURIComponent(id)}`);
     }
     async getAllBandsbyIds(ids) {
         try {
