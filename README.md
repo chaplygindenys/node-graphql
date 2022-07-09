@@ -30,6 +30,14 @@
 
 Please use an own account on https://studio.apollographql.com/
 
-************************************\_************************************|
+------------------------------------------------------------------------|
 
 or Postman with(My-Graph-4-rzex@current.graphql) https://www.postman.com/graphql/
+
+------------------------------------------------------------------------|
+http://localhost:PORT we take from : .env
+------------------------------------------------------------------------|
+default Offset and Limit we take from :
+confing.ts :
+defaultOffset = 0,
+defaultLimit = 5,

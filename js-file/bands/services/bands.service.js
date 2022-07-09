@@ -29,7 +29,7 @@ export class BandsAPI extends RESTDataSource {
         }
         catch (error) {
             if (error) {
-                console.log('EEEEEEEband', error);
+                console.log('Errorband', error);
                 return null;
             }
         }
