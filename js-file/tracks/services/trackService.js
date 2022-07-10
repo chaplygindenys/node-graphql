@@ -24,7 +24,9 @@ export class TracksAPI extends RESTDataSource {
                 const id = ids[index];
                 const track = await this.getTrack(id);
                 console.log('track: ---->', track);
-                tracks.push(track);
+                if (track) {
+                    tracks.push(track);
+                }
             }
             console.log('A', tracks);
             return tracks;

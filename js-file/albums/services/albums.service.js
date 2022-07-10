@@ -20,13 +20,15 @@ export class AlbumsAPI extends RESTDataSource {
             for (let index = 0; index < ids.length; index++) {
                 const id = ids[index];
                 const album = await this.getAlbum(id);
-                albums.push(album);
+                if (album) {
+                    albums.push(album);
+                }
             }
             return albums;
         }
         catch (error) {
             if (error) {
-                console.log('EEEalbum', error);
+                console.log('erorgetAllalbumbyid', error);
                 return null;
             }
         }

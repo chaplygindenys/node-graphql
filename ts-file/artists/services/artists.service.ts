@@ -27,23 +27,28 @@ export class ArtistsAPI extends RESTDataSource {
         const id = ids[index];
         const artist = await this.getArtist(id);
         console.log('artist: ---->', artist);
-        artists.push(artist);
+        if (artist) {
+          artists.push(artist);
+        }
       }
       console.log('A', artists);
       return artists;
     } catch (error) {
       if (error) {
         console.log('EEEartist', error);
-        return null;
       }
     }
   }
   async getArtist(id: string) {
     try {
       console.log(id);
-      return this.get(`/${encodeURIComponent(id)}`);
+      const body = await this.get(`/${encodeURIComponent(id)}`);
+      console.log('body', body);
+      return body;
     } catch (error) {
-      return null;
+      if (error) {
+        console.log('EEEartist', error);
+      }
     }
   }
   async postArtist(newArtist: Artist) {

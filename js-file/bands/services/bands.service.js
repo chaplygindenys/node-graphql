@@ -23,7 +23,9 @@ export class BandsAPI extends RESTDataSource {
             for (let index = 0; index < ids.length; index++) {
                 const id = ids[index];
                 const band = await this.getBand(id);
-                bands.push(band);
+                if (band) {
+                    bands.push(band);
+                }
             }
             return bands;
         }
