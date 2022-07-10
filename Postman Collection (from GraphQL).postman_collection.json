@@ -1,0 +1,977 @@
+{
+	"info": {
+		"_postman_id": "eec94b7d-9c50-4c10-b649-6c0a7917a9ab",
+		"name": "Postman Collection (from GraphQL)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mutations",
+			"item": [
+				{
+					"name": "createAlbum",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createAlbum ($name: String!, $released: Int, $artistsIds: [ID], $bandsIds: [ID]!, $trackIds: [ID]!, $genresIds: [ID]!, $image: String) {\n    createAlbum (name: $name, released: $released, artistsIds: $artistsIds, bandsIds: $bandsIds, trackIds: $trackIds, genresIds: $genresIds, image: $image) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"name\": \"\",\n  \"released\": 0,\n  \"artistsIds\": [\n    0\n  ],\n  \"bandsIds\": [\n    0\n  ],\n  \"trackIds\": [\n    0\n  ],\n  \"genresIds\": [\n    0\n  ],\n  \"image\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAlbum",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateAlbum ($id: ID!, $name: String, $released: Int, $artistsIds: [ID], $bandsIds: [ID], $trackIds: [ID], $genresIds: [ID], $image: String) {\n    updateAlbum (id: $id, name: $name, released: $released, artistsIds: $artistsIds, bandsIds: $bandsIds, trackIds: $trackIds, genresIds: $genresIds, image: $image) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"id\": 0,\n  \"name\": \"\",\n  \"released\": 0,\n  \"artistsIds\": [\n    0\n  ],\n  \"bandsIds\": [\n    0\n  ],\n  \"trackIds\": [\n    0\n  ],\n  \"genresIds\": [\n    0\n  ],\n  \"image\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAlbum",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteAlbum ($id: ID!) {\n    deleteAlbum (id: $id) {\n        acknowledged\n        deletedCount\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation uploadImage ($albumid: ID!, $file: String!) {\n    uploadImage (albumid: $albumid, file: $file) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"albumid\": 0,\n  \"file\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createArtist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createArtist ($firstName: String, $secondName: String, $middleName: String, $birthDate: String, $birthPlace: String, $country: String, $bandsIds: [ID], $instruments: [String]) {\n    createArtist (firstName: $firstName, secondName: $secondName, middleName: $middleName, birthDate: $birthDate, birthPlace: $birthPlace, country: $country, bandsIds: $bandsIds, instruments: $instruments) {\n        id\n        firstName\n        secondName\n        middleName\n        birthDate\n        birthPlace\n        country\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        instruments\n    }\n}",
+								"variables": "{\n  \"firstName\": \"\",\n  \"secondName\": \"\",\n  \"middleName\": \"\",\n  \"birthDate\": \"\",\n  \"birthPlace\": \"\",\n  \"country\": \"\",\n  \"bandsIds\": [\n    0\n  ],\n  \"instruments\": [\n    \"\"\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateArtist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateArtist ($id: ID!, $firstName: String, $secondName: String, $middleName: String, $birthDate: String, $birthPlace: String, $country: String, $bandsIds: [ID], $instruments: [String]) {\n    updateArtist (id: $id, firstName: $firstName, secondName: $secondName, middleName: $middleName, birthDate: $birthDate, birthPlace: $birthPlace, country: $country, bandsIds: $bandsIds, instruments: $instruments) {\n        id\n        firstName\n        secondName\n        middleName\n        birthDate\n        birthPlace\n        country\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        instruments\n    }\n}",
+								"variables": "{\n  \"id\": 0,\n  \"firstName\": \"\",\n  \"secondName\": \"\",\n  \"middleName\": \"\",\n  \"birthDate\": \"\",\n  \"birthPlace\": \"\",\n  \"country\": \"\",\n  \"bandsIds\": [\n    0\n  ],\n  \"instruments\": [\n    \"\"\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteArtist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteArtist ($id: ID!) {\n    deleteArtist (id: $id) {\n        acknowledged\n        deletedCount\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createBand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createBand ($name: String!, $origin: String, $members: [MemberInput], $website: String, $genresIds: [ID!]) {\n    createBand (name: $name, origin: $origin, members: $members, website: $website, genresIds: $genresIds) {\n        id\n        name\n        origin\n        members {\n            id\n            firstName\n            secondName\n            middleName\n            instrument\n            years\n        }\n        website\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"name\": \"\",\n  \"origin\": \"\",\n  \"members\": {\n    \"artist\": 0,\n    \"instrument\": \"\",\n    \"years\": [\n      \"\"\n    ]\n  },\n  \"website\": \"\",\n  \"genresIds\": [\n    0\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateBand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateBand ($id: ID!, $name: String, $origin: String, $members: [MemberInput], $website: String, $genresIds: [ID!]) {\n    updateBand (id: $id, name: $name, origin: $origin, members: $members, website: $website, genresIds: $genresIds) {\n        id\n        name\n        origin\n        members {\n            id\n            firstName\n            secondName\n            middleName\n            instrument\n            years\n        }\n        website\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"id\": 0,\n  \"name\": \"\",\n  \"origin\": \"\",\n  \"members\": {\n    \"artist\": 0,\n    \"instrument\": \"\",\n    \"years\": [\n      \"\"\n    ]\n  },\n  \"website\": \"\",\n  \"genresIds\": [\n    0\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteBand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteBand ($id: ID!) {\n    deleteBand (id: $id) {\n        acknowledged\n        deletedCount\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createFavourite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createFavourite ($type: Type!, $typeId: ID!) {\n    createFavourite (type: $type, typeId: $typeId) {\n        id\n        userId\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n    }\n}",
+								"variables": "{\n  \"type\": \"\",\n  \"typeId\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteFavourite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteFavourite ($type: Type!, $typeId: ID!) {\n    deleteFavourite (type: $type, typeId: $typeId) {\n        acknowledged\n        deletedCount\n    }\n}",
+								"variables": "{\n  \"type\": \"\",\n  \"typeId\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createGenre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createGenre ($name: String!, $description: String, $country: String, $year: Int) {\n    createGenre (name: $name, description: $description, country: $country, year: $year) {\n        id\n        name\n        description\n        country\n        year\n    }\n}",
+								"variables": "{\n  \"name\": \"\",\n  \"description\": \"\",\n  \"country\": \"\",\n  \"year\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateGenre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateGenre ($id: ID!, $name: String, $description: String, $country: String, $year: Int) {\n    updateGenre (id: $id, name: $name, description: $description, country: $country, year: $year) {\n        id\n        name\n        description\n        country\n        year\n    }\n}",
+								"variables": "{\n  \"id\": 0,\n  \"name\": \"\",\n  \"description\": \"\",\n  \"country\": \"\",\n  \"year\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteGenre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteGenre ($id: ID!) {\n    deleteGenre (id: $id) {\n        acknowledged\n        deletedCount\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTrack",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createTrack ($title: String!, $albumId: String, $bandsIds: [ID]!, $artistsIds: [ID]!, $duration: Int!, $released: Int!, $genresIds: [ID!]!) {\n    createTrack (title: $title, albumId: $albumId, bandsIds: $bandsIds, artistsIds: $artistsIds, duration: $duration, released: $released, genresIds: $genresIds) {\n        id\n        title\n        albums {\n            id\n            name\n            released\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            tracks {\n                id\n                title\n                albums {\n                    id\n                    name\n                    released\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                    image\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                duration\n                released\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n            image\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        duration\n        released\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"title\": \"\",\n  \"albumId\": \"\",\n  \"bandsIds\": [\n    0\n  ],\n  \"artistsIds\": [\n    0\n  ],\n  \"duration\": 0,\n  \"released\": 0,\n  \"genresIds\": [\n    0\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTrack",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateTrack ($id: ID!, $title: String, $albumId: String, $bandsIds: [ID], $artistsIds: [ID], $duration: Int, $released: Int, $genresIds: [ID]) {\n    updateTrack (id: $id, title: $title, albumId: $albumId, bandsIds: $bandsIds, artistsIds: $artistsIds, duration: $duration, released: $released, genresIds: $genresIds) {\n        id\n        title\n        albums {\n            id\n            name\n            released\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            tracks {\n                id\n                title\n                albums {\n                    id\n                    name\n                    released\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                    image\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                duration\n                released\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n            image\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        duration\n        released\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"id\": 0,\n  \"title\": \"\",\n  \"albumId\": \"\",\n  \"bandsIds\": [\n    0\n  ],\n  \"artistsIds\": [\n    0\n  ],\n  \"duration\": 0,\n  \"released\": 0,\n  \"genresIds\": [\n    0\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTrack",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteTrack ($id: ID!) {\n    deleteTrack (id: $id) {\n        acknowledged\n        deletedCount\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation register ($firstName: String, $lastName: String, $password: String!, $email: String!) {\n    register (firstName: $firstName, lastName: $lastName, password: $password, email: $email) {\n        id\n        firstName\n        lastName\n        middleName\n        password\n        email\n    }\n}",
+								"variables": "{\n  \"firstName\": \"\",\n  \"lastName\": \"\",\n  \"password\": \"\",\n  \"email\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "queries",
+			"item": [
+				{
+					"name": "allAlbums",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allAlbums ($limit: Int, $offset: Int) {\n    allAlbums (limit: $limit, offset: $offset) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "album",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query album ($id: ID!) {\n    album (id: $id) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allArtists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allArtists ($limit: Int, $offset: Int) {\n    allArtists (limit: $limit, offset: $offset) {\n        id\n        firstName\n        secondName\n        middleName\n        birthDate\n        birthPlace\n        country\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        instruments\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "artist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query artist ($id: ID!) {\n    artist (id: $id) {\n        id\n        firstName\n        secondName\n        middleName\n        birthDate\n        birthPlace\n        country\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        instruments\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allBands",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allBands ($limit: Int, $offset: Int) {\n    allBands (limit: $limit, offset: $offset) {\n        id\n        name\n        origin\n        members {\n            id\n            firstName\n            secondName\n            middleName\n            instrument\n            years\n        }\n        website\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "band",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query band ($id: ID!) {\n    band (id: $id) {\n        id\n        name\n        origin\n        members {\n            id\n            firstName\n            secondName\n            middleName\n            instrument\n            years\n        }\n        website\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favourite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query favourite ($limit: Int, $offset: Int) {\n    favourite (limit: $limit, offset: $offset) {\n        id\n        userId\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "genre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query genre ($id: ID!) {\n    genre (id: $id) {\n        id\n        name\n        description\n        country\n        year\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allGenres",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allGenres ($limit: Int, $offset: Int) {\n    allGenres (limit: $limit, offset: $offset) {\n        id\n        name\n        description\n        country\n        year\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allTracks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allTracks ($limit: Int, $offset: Int) {\n    allTracks (limit: $limit, offset: $offset) {\n        id\n        title\n        albums {\n            id\n            name\n            released\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            tracks {\n                id\n                title\n                albums {\n                    id\n                    name\n                    released\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                    image\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                duration\n                released\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n            image\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        duration\n        released\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "track",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query track ($id: ID!) {\n    track (id: $id) {\n        id\n        title\n        albums {\n            id\n            name\n            released\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            tracks {\n                id\n                title\n                albums {\n                    id\n                    name\n                    released\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                    image\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                duration\n                released\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n            image\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        duration\n        released\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query user ($id: ID!) {\n    user (id: $id) {\n        id\n        firstName\n        lastName\n        middleName\n        password\n        email\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jwt",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query jwt ($password: String!, $email: String!) {\n    jwt (password: $password, email: $email) {\n        JWT\n    }\n}",
+								"variables": "{\n  \"password\": \"\",\n  \"email\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "queries Copy",
+			"item": [
+				{
+					"name": "allAlbums",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allAlbums ($limit: Int, $offset: Int) {\n    allAlbums (limit: $limit, offset: $offset) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "album",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query album ($id: ID!) {\n    album (id: $id) {\n        id\n        name\n        released\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        image\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allArtists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allArtists ($limit: Int, $offset: Int) {\n    allArtists (limit: $limit, offset: $offset) {\n        id\n        firstName\n        secondName\n        middleName\n        birthDate\n        birthPlace\n        country\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        instruments\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "artist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query artist ($id: ID!) {\n    artist (id: $id) {\n        id\n        firstName\n        secondName\n        middleName\n        birthDate\n        birthPlace\n        country\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        instruments\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allBands",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allBands ($limit: Int, $offset: Int) {\n    allBands (limit: $limit, offset: $offset) {\n        id\n        name\n        origin\n        members {\n            id\n            firstName\n            secondName\n            middleName\n            instrument\n            years\n        }\n        website\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "band",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query band ($id: ID!) {\n    band (id: $id) {\n        id\n        name\n        origin\n        members {\n            id\n            firstName\n            secondName\n            middleName\n            instrument\n            years\n        }\n        website\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favourite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query favourite ($limit: Int, $offset: Int) {\n    favourite (limit: $limit, offset: $offset) {\n        id\n        userId\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        tracks {\n            id\n            title\n            albums {\n                id\n                name\n                released\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                tracks {\n                    id\n                    title\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    duration\n                    released\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n                image\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            duration\n            released\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "genre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query genre ($id: ID!) {\n    genre (id: $id) {\n        id\n        name\n        description\n        country\n        year\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allGenres",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allGenres ($limit: Int, $offset: Int) {\n    allGenres (limit: $limit, offset: $offset) {\n        id\n        name\n        description\n        country\n        year\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allTracks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query allTracks ($limit: Int, $offset: Int) {\n    allTracks (limit: $limit, offset: $offset) {\n        id\n        title\n        albums {\n            id\n            name\n            released\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            tracks {\n                id\n                title\n                albums {\n                    id\n                    name\n                    released\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                    image\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                duration\n                released\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n            image\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        duration\n        released\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"limit\": 0,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "track",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query track ($id: ID!) {\n    track (id: $id) {\n        id\n        title\n        albums {\n            id\n            name\n            released\n            artists {\n                id\n                firstName\n                secondName\n                middleName\n                birthDate\n                birthPlace\n                country\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                instruments\n            }\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            tracks {\n                id\n                title\n                albums {\n                    id\n                    name\n                    released\n                    artists {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        birthDate\n                        birthPlace\n                        country\n                        instruments\n                    }\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                    image\n                }\n                bands {\n                    id\n                    name\n                    origin\n                    members {\n                        id\n                        firstName\n                        secondName\n                        middleName\n                        instrument\n                        years\n                    }\n                    website\n                    genres {\n                        id\n                        name\n                        description\n                        country\n                        year\n                    }\n                }\n                artists {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    birthDate\n                    birthPlace\n                    country\n                    bands {\n                        id\n                        name\n                        origin\n                        website\n                    }\n                    instruments\n                }\n                duration\n                released\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n            image\n        }\n        bands {\n            id\n            name\n            origin\n            members {\n                id\n                firstName\n                secondName\n                middleName\n                instrument\n                years\n            }\n            website\n            genres {\n                id\n                name\n                description\n                country\n                year\n            }\n        }\n        artists {\n            id\n            firstName\n            secondName\n            middleName\n            birthDate\n            birthPlace\n            country\n            bands {\n                id\n                name\n                origin\n                members {\n                    id\n                    firstName\n                    secondName\n                    middleName\n                    instrument\n                    years\n                }\n                website\n                genres {\n                    id\n                    name\n                    description\n                    country\n                    year\n                }\n            }\n            instruments\n        }\n        duration\n        released\n        genres {\n            id\n            name\n            description\n            country\n            year\n        }\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query user ($id: ID!) {\n    user (id: $id) {\n        id\n        firstName\n        lastName\n        middleName\n        password\n        email\n    }\n}",
+								"variables": "{\n  \"id\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jwt",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query jwt ($password: String!, $email: String!) {\n    jwt (password: $password, email: $email) {\n        JWT\n    }\n}",
+								"variables": "{\n  \"password\": \"\",\n  \"email\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "",
+			"type": "any",
+			"description": "URL for the request."
+		}
+	]
+}
