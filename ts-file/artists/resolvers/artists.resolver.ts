@@ -55,10 +55,10 @@ export const resolverArtist = {
       return parent.birthDate;
     },
     birthPlace(parent: Artist, _args: any, { dataSources }: any, i: any) {
-      return parent.birthDate;
+      return parent.birthPlace;
     },
     country(parent: Artist, _args: any, { dataSources }: any, i: any) {
-      return parent.birthDate;
+      return parent.country;
     },
     bands(parent: Artist, _args: any, { dataSources }: any, i: any) {
       return dataSources.bandsAPI.getAllBandsbyIds(parent.bandsIds);

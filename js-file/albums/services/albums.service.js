@@ -36,17 +36,13 @@ export class AlbumsAPI extends RESTDataSource {
     async getAlbum(id) {
         console.log('getalbums', id);
         try {
-            if (id === 'idsad') {
-                throw new Error('idsad');
-            }
-            const body = this.get(`/${encodeURIComponent(id)}`);
+            const body = await this.get(`/${encodeURIComponent(id)}`);
             console.log('services: ', body);
             return body;
         }
         catch (error) {
             if (error) {
                 console.log(error);
-                return undefined;
             }
         }
     }

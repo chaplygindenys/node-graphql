@@ -78,14 +78,17 @@ export const resolverBands = {
                         const getMember = async (member, id) => {
                             const artist = await dataSources.artistsAPI.getArtist(id);
                             console.log('get Member', artist, member.artist);
-                            return {
-                                id: id,
-                                years: member.years,
-                                instrument: member.instrument,
-                                middleName: artist.middleName,
-                                firstName: artist.firstName,
-                                secondName: artist.secondName,
-                            };
+                            if (artist) {
+                                return {
+                                    id: id,
+                                    years: member.years,
+                                    instrument: member.instrument,
+                                    middleName: artist.middleName,
+                                    firstName: artist.firstName,
+                                    secondName: artist.secondName,
+                                };
+                            }
+                            return undefined;
                         };
                         membersWithArtistsFilds.push(await getMember(member, member.artist));
                         return membersWithArtistsFilds;
