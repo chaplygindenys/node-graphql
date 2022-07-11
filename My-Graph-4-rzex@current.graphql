@@ -1,0 +1,157 @@
+type Album {
+  id: ID!
+  name: String
+  released: Int
+  artists: [Artist]
+  bands: [Band]
+  tracks: [Track]
+  genres: [Genre]
+  image: String
+}
+
+type Query {
+  allAlbums(limit: Int, offset: Int): [Album]
+  album(id: ID!): Album
+  allArtists(limit: Int, offset: Int): [Artist]
+  artist(id: ID!): Artist
+  allBands(limit: Int, offset: Int): [Band]
+  band(id: ID!): Band
+  favourite(limit: Int, offset: Int): Favourites
+  genre(id: ID!): Genre
+  allGenres(limit: Int, offset: Int): [Genre]
+  allTracks(limit: Int, offset: Int): [Track]
+  track(id: ID!): Track
+  user(id: ID!): User!
+  jwt(password: String!, email: String!): JWT
+}
+
+type Mutation {
+  createAlbum(name: String!, released: Int, artistsIds: [ID], bandsIds: [ID]!, trackIds: [ID]!, genresIds: [ID]!, image: String): Album!
+
+  """---------------"""
+  updateAlbum(id: ID!, name: String, released: Int, artistsIds: [ID], bandsIds: [ID], trackIds: [ID], genresIds: [ID], image: String): Album!
+
+  """---------------------"""
+  deleteAlbum(id: ID!): Delete
+  uploadImage(albumid: ID!, file: String!): Album!
+  createArtist(firstName: String, secondName: String, middleName: String, birthDate: String, birthPlace: String, country: String, bandsIds: [ID], instruments: [String]): Artist!
+
+  """----------------------"""
+  updateArtist(id: ID!, firstName: String, secondName: String, middleName: String, birthDate: String, birthPlace: String, country: String, bandsIds: [ID], instruments: [String]): Artist!
+
+  """--------------------"""
+  deleteArtist(id: ID!): Delete
+  createBand(name: String!, origin: String, members: [MemberInput], website: String, genresIds: [ID!]): Band!
+
+  """-----------------"""
+  updateBand(id: ID!, name: String, origin: String, members: [MemberInput], website: String, genresIds: [ID!]): Band!
+
+  """----------------"""
+  deleteBand(id: ID!): Delete
+  createFavourite(type: Type!, typeId: ID!): Favourites!
+  deleteFavourite(type: Type!, typeId: ID!): Delete
+  createGenre(name: String!, description: String, country: String, year: Int): Genre
+  updateGenre(id: ID!, name: String, description: String, country: String, year: Int): Genre
+  deleteGenre(id: ID!): Delete
+  createTrack(title: String!, albumId: String, bandsIds: [ID]!, artistsIds: [ID]!, duration: Int!, released: Int!, genresIds: [ID!]!): Track!
+
+  """--------------------"""
+  updateTrack(id: ID!, title: String, albumId: String, bandsIds: [ID], artistsIds: [ID], duration: Int, released: Int, genresIds: [ID]): Track!
+
+  """---------------------"""
+  deleteTrack(id: ID!): Delete
+  register(firstName: String, lastName: String, password: String!, email: String!): User!
+}
+
+type Artist {
+  id: ID!
+  firstName: String
+  secondName: String
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String
+  bands: [Band]
+  instruments: [String]
+}
+
+type Band {
+  id: ID!
+  name: String
+  origin: String
+  members: [Member]
+  website: String
+  genres: [Genre]
+}
+
+type Member {
+  id: ID!
+  firstName: String
+  secondName: String
+  middleName: String
+  instrument: String
+  years: [String]
+}
+
+input MemberInput {
+  artist: ID!
+  instrument: String
+  years: [String]
+}
+
+type Favourites {
+  id: ID!
+  userId: ID
+  bands: [Band]
+  genres: [Genre]
+  artists: [Artist]
+  tracks: [Track]
+}
+
+enum Type {
+  bands
+  genres
+  artists
+  tracks
+}
+
+type Genre {
+  id: ID!
+  name: String
+  description: String
+  country: String
+  year: Int
+}
+
+type Mess {
+  message: String!
+}
+
+type Track {
+  id: ID!
+  title: String!
+  albums: Album
+  bands: [Band]
+  artists: [Artist]
+  duration: Int!
+  released: Int!
+  genres: [Genre]
+}
+
+type User {
+  id: ID!
+  firstName: String
+  lastName: String
+  middleName: String
+  password: String!
+  email: String!
+}
+
+type Delete {
+  acknowledged: Boolean
+  deletedCount: Int!
+}
+
+type JWT {
+  JWT: String!
+}

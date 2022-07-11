@@ -1,39 +1,30 @@
 type User {
   id: ID!
   firstName: String
-  secondName: String
+  lastName: String
   middleName: String
   password: String!
   email: String!
 }
-type IncrementUserViewsResponse {
-  "Similar to HTTP status code, represents the status of the mutation"
-  code: Int!
-  "Indicates whether the mutation was successful"
-  success: Boolean!
-  "Human-readable message for the UI"
-  message: String!
-  "Newly updated track after a successful mutation"
-  user: User
+type Delete {
+  acknowledged: Boolean
+  deletedCount: Int!
 }
+
 type JWT {
-  JWT: String
+  JWT: String!
 }
 
 type Query {
-  "Fetch a specific track, provided a track's ID"
-  user(id: ID!): IncrementUserViewsResponse!
+  user(id: ID!): User!
+  jwt(password: String!, email: String!): JWT
 }
 
 type Mutation {
-  verify: User
-  login(password: String!, email: String!): JWT
-  createUser(bodyUser: BodyUser): User
-}
-
-input BodyUser {
-  firstName: String
-  secondName: String
-  password: String!
-  email: String!
+  register(
+    firstName: String
+    lastName: String
+    password: String!
+    email: String!
+  ): User!
 }

@@ -1,48 +1,42 @@
-import { ApolloServer, gql } from 'apollo-server';
-import { createReadStream, readFileSync } from 'fs';
-import { readFile } from 'fs/promises';
-import { createRequire } from 'module';
-import { cwd } from 'process';
-import { pipeline } from 'stream';
-import { buffer } from 'stream/consumers';
-import { PersonalizationAPI } from './users/modules/model.js';
-import { resolvers } from './users/resolvers/resolver.js';
+import { ApolloServer } from 'apollo-server';
+import 'dotenv/config';
+import { resolvers, typeDefs } from './services.js';
+import { ArtistsAPI } from './artists/services/artists.service.js';
+import { BandsAPI } from './bands/services/bands.service.js';
+import { GenresAPI } from './genres/services/genres.service.js';
+import { FavouritesAPI } from './favourites/services/favourites.service.js';
+import { TracksAPI } from './tracks/services/trackService.js';
 import { UsersAPI } from './users/services/users.services.js';
-
-export const read = async (path: string) => {
-  try {
-    const controller = new AbortController();
-    const signal = await controller.signal;
-    const promise = readFile(path, { signal });
-    const str = await promise;
-    controller.abort();
-    return str.toString('utf8');
-  } catch (err) {
-    if (err) {
-      console.error(err);
-    }
-  }
-};
-const data = await read('./ts-file/users/shemas/user.graphql');
-const typeDefs = gql(data ? data : '1');
+import { AlbumsAPI } from './albums/services/albums.service.js';
+import moment from 'moment';
+// import { PersonalizationAPI } from './users/modules/model.js';
+// console.log(typeDefs);
+const PORT = process.env.PORT || 4000;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  csrfPrevention: true,
   dataSources: () => {
     return {
-      usersAPI: new UsersAPI() || '2112431423132',
-      personalizationAPI: new PersonalizationAPI(),
+      usersAPI: new UsersAPI() || 'usersAPI',
+      tracksAPI: new TracksAPI() || 'traksApi',
+      genresAPI: new GenresAPI() || 'genresAPI',
+      bandsAPI: new BandsAPI() || 'bandsAPI',
+      artistsAPI: new ArtistsAPI() || 'artistsAPI',
+      albumsAPI: new AlbumsAPI() || 'albumsAPI',
+      favouritesAPI: new FavouritesAPI() || 'favouritesAPI',
+      // personalizationAPI: new PersonalizationAPI(),
     };
   },
   context: ({ req }) => {
-    return { token: req.headers.authorization || 'auth_token' };
+    return { token: req.headers.authorization || '' };
   },
 });
 
 server
-  .listen()
+  .listen({ port: PORT })
   .then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
+    console.log(`🚀 ${console.log(moment(Date.now()))} Server ready at ${url}`);
   })
   .catch((err) => {
     console.error(err);

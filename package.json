@@ -7,7 +7,6 @@
   "scripts": {
     "start": "tsc -p tsconfig.json && node js-file/server.js",
     "start:dev": "tsc --watch | nodemon",
-    "start:front": "node ./index.js",
     "lint": "eslint --ext .js,.ts --fix ts-file/",
     "build": "tsc -p tsconfig.json",
     "fix-ts": "eslint --fix 'project-with-typescript/*.ts'"
@@ -15,16 +14,23 @@
   "author": "Chaplygin Denys",
   "license": "ISC",
   "dependencies": {
+    "@graphql-tools/code-file-loader": "^7.3.0",
+    "@graphql-tools/graphql-file-loader": "^7.4.0",
+    "@graphql-tools/load": "^7.7.0",
     "apollo-datasource-rest": "^3.6.1",
     "apollo-server": "^3.9.0",
     "apollo-server-core": "^3.9.0",
     "apollo-server-express": "^3.9.0",
     "apollo-server-types": "^3.6.1",
     "cross-env": "^7.0.3",
+    "deepmerge": "^4.2.2",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "graphql": "^16.5.0",
     "graphql-tools": "^8.3.0",
+    "i": "^0.3.7",
+    "moment": "^2.29.3",
+    "npm": "^8.13.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
